@@ -19,6 +19,7 @@ public class MainMenuGUI extends Application {
         stage.setTitle("");
         stage.setScene(scene);
         stage.show();
+        
     }
 
     public void run() { Application.launch(); }

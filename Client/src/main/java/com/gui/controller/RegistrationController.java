@@ -1,20 +1,38 @@
 package com.gui.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
 
 
+import com.gui.Constants;
+import com.gui.MainMenuGUI;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import com.SQLsupport.DBConnection;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+
+import static com.gui.Constants.*;
 
 public class RegistrationController {
+
+    private Parent root;
+    private Stage stage;
+    private Scene scene;
 
     @FXML
     private ResourceBundle resources;
@@ -23,13 +41,28 @@ public class RegistrationController {
     private URL location;
 
     @FXML
-    private TextField emailTextField;
+    private TextField addressField;
 
     @FXML
-    private TextField loginTextField;
+    private TextField firstNameField;
 
     @FXML
-    private PasswordField passwordFTextiled;
+    private TextField lastNameFiled;
+
+    @FXML
+    private ImageView backArrow;
+
+    @FXML
+    private TextField loginField;
+
+    @FXML
+    private TextField moneyField;
+
+    @FXML
+    private PasswordField passwordFiled;
+
+    @FXML
+    private TextField phoneField;
 
     @FXML
     private Button registrationButton;
@@ -39,15 +72,20 @@ public class RegistrationController {
 
     @FXML
     void initialize() {
-        assert emailTextField != null : "fx:id=\"emailTextField\" was not injected: check your FXML file 'Registration.fxml'.";
-        assert loginTextField != null : "fx:id=\"loginTextField\" was not injected: check your FXML file 'Registration.fxml'.";
-        assert passwordFTextiled != null : "fx:id=\"passwordFTextiled\" was not injected: check your FXML file 'Registration.fxml'.";
-        assert registrationButton != null : "fx:id=\"registrationButton\" was not injected: check your FXML file 'Registration.fxml'.";
-        assert registrationLabel != null : "fx:id=\"registrationLabel\" was not injected: check your FXML file 'Registration.fxml'.";
-
         registrationButton.setOnAction(new MyActionHandler());
 
     }
+
+    public void switchToMainMenuScene(MouseEvent event) throws IOException {
+        root = FXMLLoader.load(MainMenuGUI.class.getResource(MAIN_MENU_FXML));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+
+
 
     class MyActionHandler implements EventHandler<ActionEvent>{
 
@@ -66,9 +104,13 @@ public class RegistrationController {
         @Override
         public void handle(ActionEvent event) {
 
-            String email=emailTextField.getText();
-            String login=loginTextField.getText();
-            String password=passwordFTextiled.getText();
+            String login=loginField.getText();
+            String password=passwordFiled.getText();
+            String address=addressField.getText();
+            int money=Integer.parseInt(moneyField.getText());
+            String lastName=lastNameFiled.getText();
+            String firstName=firstNameField.getText();
+            String phone=phoneField.getText();
 
 
 
@@ -81,12 +123,19 @@ public class RegistrationController {
                     while(result.next())
                         rowNumber++;
                 }
-                String sql1="INSERT INTO db7.user(id,name,password,email) VALUES (?,?,?,?)";
+                String sql1="INSERT INTO "+DB_NAME+"."+USER_SCHEMA+" ("+
+                        USER_ID+","+ USER_LOGIN+","+ USER_PASSWORD+","+
+                        USER_FIRST_NAME+","+ USER_LAST_NAME+","+
+                        USER_MONEY+","+USER_ADDRESS+","+USER_PHONE+")"+" VALUES (?,?,?,?,?,?,?,?)";
                 try(PreparedStatement prepStmt=conn.prepareStatement(sql1)){
                     prepStmt.setInt(1, ++rowNumber);
                     prepStmt.setString(2, login);
                     prepStmt.setString(3, password);
-                    prepStmt.setString(4, email);
+                    prepStmt.setString(4, firstName);
+                    prepStmt.setString(5, lastName);
+                    prepStmt.setInt(6, money);
+                    prepStmt.setString(7, address);
+                    prepStmt.setString(8, phone);
                     boolean res = prepStmt.executeUpdate() > 0;
                     System.out.println(res);
 
@@ -95,9 +144,6 @@ public class RegistrationController {
                 System.out.println(e);
             }
 
-            emailTextField.setText("");
-            loginTextField.setText("");
-            passwordFTextiled.setText("");
         }
     }
 }
