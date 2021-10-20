@@ -23,7 +23,7 @@ public class OwnClient {
         System.out.println("connection established...");
     }
 
-    public void Run() throws IOException,ClassNotFoundException{
+    public void Run() {/*throws IOException,ClassNotFoundException{
         System.out.print("~client: ");
 
         int size = scan.nextInt();
@@ -33,7 +33,7 @@ public class OwnClient {
         System.out.print("~server: sent array-> ");
         for(int value: array)
             System.out.print("\t"+value);
-        System.out.println();
+        System.out.println();*/
     }
 
     public void Close() throws IOException{

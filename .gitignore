@@ -1,1 +1,5 @@
 demo/
+.idea/libraries/
+*.png
+*.jar
+*.log
