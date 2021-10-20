@@ -33,7 +33,7 @@ public class ThreadForServer implements Runnable{
 
     @Override
     public void run() {
-        try {
+        /*try {
             int size = (int) input_stream.readObject();
             int min = 0;
             int max = size;
@@ -47,6 +47,6 @@ public class ThreadForServer implements Runnable{
         } catch (IOException | ClassNotFoundException | InterruptedException e) {
             System.out.println(e);
             e.printStackTrace();
-        }
+        }*/
     }
 }

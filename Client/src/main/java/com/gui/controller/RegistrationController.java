@@ -1,4 +1,4 @@
-package com.gui.client;
+package com.gui.controller;
 
 import java.net.URL;
 import java.sql.*;
@@ -9,11 +9,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import com.SQLsupport.DBConnection;
 
-public class AuthorizationController {
+public class RegistrationController {
 
     @FXML
     private ResourceBundle resources;
@@ -34,11 +35,15 @@ public class AuthorizationController {
     private Button registrationButton;
 
     @FXML
+    private Label registrationLabel;
+
+    @FXML
     void initialize() {
-        assert emailTextField != null : "fx:id=\"emailTextField\" was not injected: check your FXML file 'Authorization.fxml'.";
-        assert loginTextField != null : "fx:id=\"loginTextField\" was not injected: check your FXML file 'Authorization.fxml'.";
-        assert passwordFTextiled != null : "fx:id=\"passwordFTextiled\" was not injected: check your FXML file 'Authorization.fxml'.";
-        assert registrationButton != null : "fx:id=\"registrationButton\" was not injected: check your FXML file 'Authorization.fxml'.";
+        assert emailTextField != null : "fx:id=\"emailTextField\" was not injected: check your FXML file 'Registration.fxml'.";
+        assert loginTextField != null : "fx:id=\"loginTextField\" was not injected: check your FXML file 'Registration.fxml'.";
+        assert passwordFTextiled != null : "fx:id=\"passwordFTextiled\" was not injected: check your FXML file 'Registration.fxml'.";
+        assert registrationButton != null : "fx:id=\"registrationButton\" was not injected: check your FXML file 'Registration.fxml'.";
+        assert registrationLabel != null : "fx:id=\"registrationLabel\" was not injected: check your FXML file 'Registration.fxml'.";
 
         registrationButton.setOnAction(new MyActionHandler());
 
