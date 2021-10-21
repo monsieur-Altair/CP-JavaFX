@@ -1,5 +1,9 @@
 package com.server;
 
+import com.SQLsupport.AddUser;
+import com.SQLsupport.DBConnection;
+import com.SQLsupport.Requestable;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -11,8 +15,9 @@ public class ThreadForServer implements Runnable{
     private ObjectInputStream input_stream;
     private ObjectOutputStream output_stream;
     private static int clientCount=0;
+    private DBConnection dbConnection;
 
-    public ThreadForServer(ServerSocket serverSocket){
+    public ThreadForServer(ServerSocket serverSocket, DBConnection dbConnection){
 
         try {
             client=serverSocket.accept();
@@ -20,6 +25,7 @@ public class ThreadForServer implements Runnable{
             System.out.println("client "+clientCount+" is connected");
             input_stream = new ObjectInputStream(client.getInputStream());
             output_stream = new ObjectOutputStream(client.getOutputStream());
+            this.dbConnection=dbConnection;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -33,20 +39,28 @@ public class ThreadForServer implements Runnable{
 
     @Override
     public void run() {
-        /*try {
-            int size = (int) input_stream.readObject();
-            int min = 0;
-            int max = size;
-            System.out.println("~client: " + size);
-            int[] array = new int[size];
-            for (int i = 0; i < size; i++)
-                array[i] = (int) (min + (Math.random() * (max - min)));
-            Thread.sleep(1500);
-            output_stream.writeObject(array);
-            this.Release();
-        } catch (IOException | ClassNotFoundException | InterruptedException e) {
-            System.out.println(e);
+
+        try{
+            String clientChoice=(String)input_stream.readObject();
+            Requestable sqlRequest;
+            switch (clientChoice){
+                case "registration":
+                    sqlRequest=new AddUser();
+                    String dataFromClient=(String)input_stream.readObject();
+                    sqlRequest.getData(dataFromClient);
+                    sqlRequest.execute(dbConnection.getMyConnection());
+                    break;
+            }
+        }
+        catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
-        }*/
+        }
+
+
+        try {
+            this.Release();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

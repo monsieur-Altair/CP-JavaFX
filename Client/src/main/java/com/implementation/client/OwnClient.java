@@ -14,13 +14,34 @@ public class OwnClient {
     private ObjectOutputStream output_stream;
     private ObjectInputStream input_stream;
     private Scanner scan;
+    private static OwnClient ownClient=null;
 
-    public OwnClient(String host, int port) throws IOException{
-        client = new Socket(host,port);
-        output_stream=new ObjectOutputStream(client.getOutputStream());
-        input_stream=new ObjectInputStream(client.getInputStream());
-        scan=new Scanner(System.in);
-        System.out.println("connection established...");
+
+    private OwnClient(String host, int port) {
+        try {
+            client = new Socket(host, port);
+            output_stream = new ObjectOutputStream(client.getOutputStream());
+            input_stream = new ObjectInputStream(client.getInputStream());
+            scan = new Scanner(System.in);
+            System.out.println("connection established...");
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static OwnClient getInstance(){
+        if(ownClient==null){
+            ownClient=new OwnClient("127.0.0.1",2525);
+        }
+        return ownClient;
+    }
+
+    public void sendDataToServer(String data){
+        try {
+            output_stream.writeObject(data);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void Run() {/*throws IOException,ClassNotFoundException{

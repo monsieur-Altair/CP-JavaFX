@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import com.gui.Constants;
 import com.gui.MainMenuGUI;
+import com.implementation.client.OwnClient;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -20,7 +21,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import com.SQLsupport.DBConnection;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -33,6 +33,7 @@ public class RegistrationController {
     private Parent root;
     private Stage stage;
     private Scene scene;
+    private OwnClient client;
 
     @FXML
     private ResourceBundle resources;
@@ -84,28 +85,17 @@ public class RegistrationController {
         stage.show();
     }
 
-
-
-
     class MyActionHandler implements EventHandler<ActionEvent>{
 
-        DBConnection dbConnection;
-        static int rowNumber=0;
-
         public MyActionHandler(){
-            try{
-                dbConnection=new DBConnection();
-                dbConnection.init();
 
-            }catch(IllegalAccessException | InstantiationException e){
-                System.out.println(e);
-            }
         }
         @Override
         public void handle(ActionEvent event) {
 
             String login=loginField.getText();
             String password=passwordFiled.getText();
+            int role=0;
             String address=addressField.getText();
             int money=Integer.parseInt(moneyField.getText());
             String lastName=lastNameFiled.getText();
@@ -113,37 +103,11 @@ public class RegistrationController {
             String phone=phoneField.getText();
 
 
-
-            try(Connection conn=dbConnection.getMyConnection()){
-
-                String sql0="SELECT * FROM db7.user";
-                try(Statement stmt= conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE)){
-                    ResultSet result= stmt.executeQuery(sql0);
-                    result.beforeFirst();
-                    while(result.next())
-                        rowNumber++;
-                }
-                String sql1="INSERT INTO "+DB_NAME+"."+USER_SCHEMA+" ("+
-                        USER_ID+","+ USER_LOGIN+","+ USER_PASSWORD+","+
-                        USER_FIRST_NAME+","+ USER_LAST_NAME+","+
-                        USER_MONEY+","+USER_ADDRESS+","+USER_PHONE+")"+" VALUES (?,?,?,?,?,?,?,?)";
-                try(PreparedStatement prepStmt=conn.prepareStatement(sql1)){
-                    prepStmt.setInt(1, ++rowNumber);
-                    prepStmt.setString(2, login);
-                    prepStmt.setString(3, password);
-                    prepStmt.setString(4, firstName);
-                    prepStmt.setString(5, lastName);
-                    prepStmt.setInt(6, money);
-                    prepStmt.setString(7, address);
-                    prepStmt.setString(8, phone);
-                    boolean res = prepStmt.executeUpdate() > 0;
-                    System.out.println(res);
-
-                }
-            }catch (SQLException e){
-                System.out.println(e);
-            }
-
+            client=OwnClient.getInstance();
+            client.sendDataToServer("registration");
+            String dataFromClient=login+" "+password+" "+role+" "+firstName+" "+
+                    lastName+" "+money+" "+address+" "+phone;
+            client.sendDataToServer(dataFromClient);
         }
     }
 }

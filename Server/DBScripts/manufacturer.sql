@@ -4,6 +4,6 @@ CREATE TABLE IF NOT EXISTS `manufacturer`(
     `name`      varchar(45) NOT NULL,
     `country`   varchar(45) NOT NULL,
     `email`     varchar(45) NOT NULL,
-    `rate`     varchar(45)  NOT NULL,
+    `rating`     varchar(45)  NOT NULL,
     PRIMARY KEY (`id_manufacturer`)
 ) DEFAULT CHARSET=utf8;
