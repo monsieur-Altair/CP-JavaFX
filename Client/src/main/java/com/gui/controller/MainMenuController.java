@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.SQLsupport.DBClass.User;
 import com.gui.MainMenuGUI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,6 +13,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import static com.gui.Constants.*;
@@ -27,7 +30,14 @@ public class MainMenuController {
     private ResourceBundle resources;
 
     @FXML
+    private TableView<User> tableView;
     private URL location;
+
+    @FXML
+    private AnchorPane headerPane;
+
+    @FXML
+    private AnchorPane mainPane;
 
     @FXML
     private Button registrationButton;
@@ -37,16 +47,15 @@ public class MainMenuController {
 
     @FXML
     void initialize() {
-       /*registrationButton.setOnAction((event)->{
-            loadNewScene(REGISTRATION_FXML);
-            registrationButton.getScene().getWindow().hide();
-        });
+        switchTheme(DARK_THEME_PATH);
+        tableView = new TableView<>();
+    }
 
-        signInButton.setOnAction((event)->{
-            loadNewScene(SIGN_IN_FXML);
-            signInButton.getScene().getWindow().hide();
-        });*/
-
+    public void switchTheme(String themePath){
+        String css = MainMenuGUI.class.getResource(themePath).toExternalForm();
+        headerPane.getStylesheets().add(css);
+        headerPane.getStyleClass().add("header");
+        mainPane.getStyleClass().add("main");
     }
 
     public void switchToRegisterScene(ActionEvent event) throws IOException{
@@ -64,21 +73,4 @@ public class MainMenuController {
         stage.setScene(scene);
         stage.show();
     }
-
-
-/*    public static void loadNewScene(String pathFXML){
-        FXMLLoader loader = new FXMLLoader(MainMenuGUI.class.getResource(pathFXML));
-        //loader.setLocation(MainMenuGUI.class.getResource(pathFXML));
-        try{
-            Parent root = loader.load();
-            //Parent root=loader.getRoot();
-            Stage stage = new Stage();
-            stage.setTitle("");
-            stage.setScene(new Scene(root));
-            stage.show();
-        }catch (IOException e){
-            System.out.println(e);
-            e.printStackTrace();
-        }
-    }*/
 }

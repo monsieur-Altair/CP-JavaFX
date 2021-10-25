@@ -3,6 +3,7 @@ module Client {
     requires javafx.fxml;
     requires javafx.graphics;
     requires java.sql;
+    requires Server;
 
     opens com.gui to javafx.fxml;
     exports com.gui;

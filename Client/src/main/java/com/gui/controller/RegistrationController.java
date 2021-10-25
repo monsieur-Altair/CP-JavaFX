@@ -6,6 +6,7 @@ import java.sql.*;
 import java.util.ResourceBundle;
 
 
+import com.SQLsupport.DBClass.User;
 import com.gui.Constants;
 import com.gui.MainMenuGUI;
 import com.implementation.client.OwnClient;
@@ -85,11 +86,17 @@ public class RegistrationController {
         stage.show();
     }
 
+    public void switchToUserMenuScene(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(MainMenuGUI.class.getResource(USER_MENU_FXML));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+
     class MyActionHandler implements EventHandler<ActionEvent>{
 
-        public MyActionHandler(){
-
-        }
         @Override
         public void handle(ActionEvent event) {
 
@@ -108,6 +115,16 @@ public class RegistrationController {
             String dataFromClient=login+" "+password+" "+role+" "+firstName+" "+
                     lastName+" "+money+" "+address+" "+phone;
             client.sendDataToServer(dataFromClient);
+
+            boolean result = client.receiveResult();
+            if(result){
+                try {
+                    client.setUserProfile(new User(login,password,role,firstName,lastName,money,address,phone));
+                    switchToUserMenuScene(event);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            };
         }
     }
 }

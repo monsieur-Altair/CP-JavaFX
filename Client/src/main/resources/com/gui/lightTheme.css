@@ -1,0 +1,56 @@
+/*
+e9e9e9 - dark gray for header and button back
+fafafa - white
+000000 - black for text
+d3d3d3 - more dark grey for left menu
+*/
+
+.header{
+    -fx-background-color:"#e9e9e9";
+}
+
+.main{
+    -fx-background-color:"#fff";
+}
+
+.left{
+    -fx-background-color: "#d3d3d3";
+}
+
+.button{
+    -fx-background-color:"#e9e9e9";
+    -fx-background-radius:20;
+    -fx-font-size:15;
+    -fx-text-fill:"#000000";
+    -fx-font-family: Georgia;
+
+}
+.label{
+    -fx-text-fill: "#000000";
+    -fx-font-family: Georgia;
+    -fx-font-size: 15;
+    -fx-alignment: center;
+}
+
+.label-header{
+    -fx-text-fill: "#000000";
+    -fx-font-family: Georgia;
+    -fx-font-size: 28;
+    -fx-alignment: center;
+}
+
+.table-view{
+    -fx-text-fill:"#000000";
+    -fx-font-family: Georgia;
+    -fx-background-color: "#fafafa";
+}
+
+.table-view .column-header-background{
+    -fx-font-size: 15;
+    -fx-alignment: center;
+    -fx-text-fill: "#000000";
+    -fx-font-family: Georgia;
+    -fx-background-color: "#e9e9e9";
+    -fx-border-color: "#000000";
+}
+

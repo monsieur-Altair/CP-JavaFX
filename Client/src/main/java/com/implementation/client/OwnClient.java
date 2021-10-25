@@ -2,12 +2,16 @@ package com.implementation.client;
 
 
 
+import com.SQLsupport.DBClass.Manufacturer;
+import com.SQLsupport.DBClass.User;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.lang.ref.Cleaner;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Vector;
 
 public class OwnClient {
     private Socket client;
@@ -15,7 +19,17 @@ public class OwnClient {
     private ObjectInputStream input_stream;
     private Scanner scan;
     private static OwnClient ownClient=null;
+    private User user=null;
+    private boolean isRussianLanguage;
+    private boolean isDarkTheme;
 
+    public boolean isRussianLanguage() {
+        return isRussianLanguage;
+    }
+
+    public boolean isDarkTheme() {
+        return isDarkTheme;
+    }
 
     private OwnClient(String host, int port) {
         try {
@@ -23,17 +37,39 @@ public class OwnClient {
             output_stream = new ObjectOutputStream(client.getOutputStream());
             input_stream = new ObjectInputStream(client.getInputStream());
             scan = new Scanner(System.in);
+            isDarkTheme=true;
+            isRussianLanguage=true;
             System.out.println("connection established...");
         }catch (IOException e){
             e.printStackTrace();
         }
     }
 
+    public void switchLanguage(){
+        isRussianLanguage=!isRussianLanguage;
+    }
+
+    public void switchTheme(){
+        isDarkTheme=!isDarkTheme;
+    }
+
+
+
     public static OwnClient getInstance(){
         if(ownClient==null){
             ownClient=new OwnClient("127.0.0.1",2525);
         }
         return ownClient;
+    }
+
+    public void setUserProfile(User us){
+        if(user==null){
+            user=new User(us);
+        }
+    }
+
+    public User getUserProfile(){
+        return user;
     }
 
     public void sendDataToServer(String data){
@@ -44,17 +80,31 @@ public class OwnClient {
         }
     }
 
-    public void Run() {/*throws IOException,ClassNotFoundException{
-        System.out.print("~client: ");
+    public boolean receiveResult(){
+        try {
+            return (boolean)input_stream.readObject();
+        }catch (IOException |ClassNotFoundException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
 
-        int size = scan.nextInt();
-        output_stream.writeObject(size);
+    public Vector<User> receiveUsers(){
+        try {
+            return (Vector<User>) input_stream.readObject();
+        }catch (IOException |ClassNotFoundException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-        int[] array=(int[])(input_stream.readObject());
-        System.out.print("~server: sent array-> ");
-        for(int value: array)
-            System.out.print("\t"+value);
-        System.out.println();*/
+    public Vector<Manufacturer> receiveManufacturers(){
+        try {
+            return (Vector<Manufacturer>) input_stream.readObject();
+        }catch (IOException |ClassNotFoundException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void Close() throws IOException{
