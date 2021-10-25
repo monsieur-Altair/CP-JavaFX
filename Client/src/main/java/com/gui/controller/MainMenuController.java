@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -40,6 +41,9 @@ public class MainMenuController {
     private AnchorPane mainPane;
 
     @FXML
+    private Label headLabel;
+
+    @FXML
     private Button registrationButton;
 
     @FXML
@@ -56,6 +60,7 @@ public class MainMenuController {
         headerPane.getStylesheets().add(css);
         headerPane.getStyleClass().add("header");
         mainPane.getStyleClass().add("main");
+        headLabel.getStyleClass().add("label-header");
     }
 
     public void switchToRegisterScene(ActionEvent event) throws IOException{

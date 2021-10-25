@@ -22,4 +22,12 @@ public class Constants {
     public static final String MANUFACTURER_RATING="rating";
     public static final String MANUFACTURER_NUMBER="number_of_ratings";
 
+    public static final String PRODUCT_SCHEMA="product";
+    public static final String PRODUCT_ID="id_product";
+    public static final String PRODUCT_NAME="name";
+    public static final String PRODUCT_TYPE="type";
+    public static final String PRODUCT_COST="cost";
+    public static final String PRODUCT_COUNT="count";
+    public static final String PRODUCT_MANUFACTURER="id_manufacturer";
+
 }

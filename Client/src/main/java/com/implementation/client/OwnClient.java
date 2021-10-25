@@ -3,6 +3,7 @@ package com.implementation.client;
 
 
 import com.SQLsupport.DBClass.Manufacturer;
+import com.SQLsupport.DBClass.Product;
 import com.SQLsupport.DBClass.User;
 
 import java.io.IOException;
@@ -111,6 +112,15 @@ public class OwnClient {
         output_stream.close();
         input_stream.close();
         client.close();
+    }
+
+    public Vector<Product> receiveProducts() {
+        try {
+            return (Vector<Product>) input_stream.readObject();
+        }catch (IOException |ClassNotFoundException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }
 

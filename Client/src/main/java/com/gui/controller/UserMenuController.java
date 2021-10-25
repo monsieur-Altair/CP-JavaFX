@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -31,34 +32,34 @@ public class UserMenuController {
     protected Button basketButton;
 
     @FXML
-    private AnchorPane headerPane;
+    protected AnchorPane headerPane;
 
     @FXML
-    private Button languageButton;
+    protected Button languageButton;
 
     @FXML
-    private Button profileButton;
+    protected Button profileButton;
 
     @FXML
-    private Button closeButton;
+    protected Button closeButton;
 
     @FXML
-    private VBox leftPane;
+    protected VBox leftPane;
 
     @FXML
-    private AnchorPane mainPane;
+    protected AnchorPane mainPane;
 
     @FXML
-    private Button manufacturerButton;
+    protected Button manufacturerButton;
 
     @FXML
-    private Button productButton;
+    protected Button productButton;
 
     @FXML
-    private Label headLabel;
+    protected Label headLabel;
 
     @FXML
-    private Button themeButton;
+    protected Button themeButton;
 
     public UserMenuController() {
     }
@@ -72,22 +73,25 @@ public class UserMenuController {
 
         headLabel.setText("Добро пожаловать, "+client.getUserProfile().getLogin()+"!");
 
+        initMainButtons();
+
         themeButton.setOnMouseClicked((event)->{
             String path1=client.isDarkTheme()?LIGHT_THEME_PATH:DARK_THEME_PATH;
             switchTheme(path1);
             client.switchTheme();
         });
 
+
+    }
+
+    public void initMainButtons(){
+
+        productButton.setOnMouseClicked(event -> {
+            switchScene(event,USER_PRODUCTS_FXML);
+        });
+
         manufacturerButton.setOnMouseClicked(event->{
-            try {
-                root = FXMLLoader.load(MainMenuGUI.class.getResource(USER_MANUFACTURER_FXML));
-                stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-                scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            switchScene(event,USER_MANUFACTURER_FXML);
         });
 
         closeButton.setOnMouseClicked(event->{
@@ -97,7 +101,7 @@ public class UserMenuController {
         });
     }
 
-    public void switchTheme(String themePath){
+    private void switchTheme(String themePath){
         ObservableList<String> styleSheets=headerPane.getStylesheets();
 
         String css = MainMenuGUI.class.getResource(themePath).toExternalForm();
@@ -112,7 +116,17 @@ public class UserMenuController {
         headLabel.getStyleClass().add("label-header");
     }
 
-
+    public void switchScene(MouseEvent event, String path){
+        try {
+            root = FXMLLoader.load(MainMenuGUI.class.getResource(path));
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
 

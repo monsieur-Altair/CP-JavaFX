@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="headerPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gui.controller.UserManufacturerController">
+<AnchorPane fx:id="headerPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gui.controller.UserProductsController">
   <children>
     <AnchorPane fx:id="mainPane" layoutX="-1.0" layoutY="58.0" prefHeight="591.0" prefWidth="850.0" AnchorPane.topAnchor="58.0">
       <children>
@@ -58,17 +58,18 @@
                   <Insets top="20.0" />
                </padding>
             </VBox>
-            <TableView fx:id="manufacturerTable" layoutX="183.0" layoutY="14.0" prefHeight="486.0" prefWidth="628.0">
+            <TableView fx:id="productsTable" layoutX="183.0" layoutY="14.0" prefHeight="486.0" prefWidth="628.0">
               <columns>
-                <TableColumn fx:id="idColumn" prefWidth="73.60005187988281" text="Номер" />
-                <TableColumn fx:id="nameColumn" prefWidth="138.4000244140625" text="Название" />
-                  <TableColumn fx:id="countryColumn" minWidth="0.0" prefWidth="100.79998779296875" text="Страна" />
-                  <TableColumn fx:id="emailColumn" prefWidth="156.79998779296875" text="Почта" />
-                  <TableColumn fx:id="ratingColumn" minWidth="0.0" prefWidth="154.39999999999998" text="Рейтинг" />
+                <TableColumn fx:id="idColumn" prefWidth="70.4000244140625" text="Номер" />
+                <TableColumn fx:id="nameColumn" prefWidth="145.59996032714844" text="Название" />
+                  <TableColumn fx:id="typeColumn" minWidth="0.0" prefWidth="99.20001220703125" text="Тип" />
+                  <TableColumn fx:id="costColumn" prefWidth="74.4000244140625" text="Цена($)" />
+                  <TableColumn fx:id="countColumn" minWidth="0.0" prefWidth="84.79998779296875" text="На складе" />
+                  <TableColumn fx:id="manufacturerColumn" prefWidth="148.79998779296875" text="Производитель" />
               </columns>
             </TableView>
       </children></AnchorPane>
-    <Label fx:id="headLabel" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="35.0" prefWidth="822.0" text="Производители" textAlignment="CENTER" textFill="WHITE">
+    <Label fx:id="headLabel" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="35.0" prefWidth="822.0" text="Товары" textAlignment="CENTER" textFill="WHITE">
       <font>
         <Font name="Euclid Fraktur Bold" size="28.0" />
       </font>

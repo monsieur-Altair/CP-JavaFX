@@ -12,6 +12,7 @@ public class Constants {
     public static final String SIGN_IN_FXML="SignIn.fxml";
     public static final String USER_MENU_FXML="UserMenu.fxml";
     public static final String USER_MANUFACTURER_FXML="UserManufacturer.fxml";
+    public static final String USER_PRODUCTS_FXML="UserProducts.fxml";
 
 
 }

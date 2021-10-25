@@ -1,0 +1,45 @@
+package com.SQLsupport.DBClass;
+
+import java.io.Serializable;
+
+public class Product implements Serializable {
+    private int id_product;
+    private String name;
+    private String type;
+    private int cost;
+    private int count;
+    private String id_manufacturer;
+
+    public Product(int id_product, String name, String type, int cost, int count, String id_manufacturer) {
+        this.id_product = id_product;
+        this.name = name;
+        this.type = type;
+        this.cost = cost;
+        this.count = count;
+        this.id_manufacturer = id_manufacturer;
+    }
+
+    public int getId_product() {
+        return id_product;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public String getId_manufacturer() {
+        return id_manufacturer;
+    }
+}

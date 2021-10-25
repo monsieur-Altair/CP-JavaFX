@@ -14,7 +14,7 @@
   <children>
     <AnchorPane layoutY="61.0" prefHeight="590.0" prefWidth="850.0" style="-fx-background-color: #3f3f3f;">
       <children>
-        <Button fx:id="registrationButton" layoutX="342.0" layoutY="455.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="166.0" style="-fx-background-color: #2C2C2C; -fx-background-radius: 20; -fx-font-size: 15; -fx-text-fill: #FAFAFA;" text="Зарегистрироваться">
+        <Button fx:id="registrationButton" layoutX="342.0" layoutY="455.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="166.0" style="-fx-background-color: #2C2C2C; -fx-font-family: Georgia; -fx-background-radius: 20; -fx-font-size: 15; -fx-text-fill: #FAFAFA;" text="Зарегистрироваться">
           <font>
             <Font name="Georgia" size="18.0" />
           </font>

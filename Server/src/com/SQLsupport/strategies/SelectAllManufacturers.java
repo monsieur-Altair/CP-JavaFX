@@ -13,7 +13,7 @@ import java.util.Vector;
 import static com.SQLsupport.Constants.*;
 import static com.SQLsupport.Constants.USER_PASSWORD;
 
-public class SelectManufacturer implements Requestable {
+public class SelectAllManufacturers implements Requestable {
 
     @Override
     public void getData(String data) {

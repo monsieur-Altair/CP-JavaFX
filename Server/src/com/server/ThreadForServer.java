@@ -1,11 +1,13 @@
 package com.server;
 
 import com.SQLsupport.DBClass.Manufacturer;
+import com.SQLsupport.DBClass.Product;
 import com.SQLsupport.DBClass.User;
 import com.SQLsupport.strategies.AddUser;
 import com.SQLsupport.DBConnection;
 import com.SQLsupport.Updatable;
-import com.SQLsupport.strategies.SelectManufacturer;
+import com.SQLsupport.strategies.SelectAllManufacturers;
+import com.SQLsupport.strategies.SelectAllProducts;
 import com.SQLsupport.strategies.SelectUser;
 
 import java.io.IOException;
@@ -83,9 +85,14 @@ public class ThreadForServer implements Runnable{
                         output_stream.writeObject(user);
                         break;
                     case "select all manufacturer":
-                        var sqlSelect1=new SelectManufacturer();
+                        var sqlSelect1=new SelectAllManufacturers();
                         Vector<Manufacturer> manufacturers = sqlSelect1.executeSelect(dbConnection.getMyConnection());
                         output_stream.writeObject(manufacturers);
+                        break;
+                    case "select all products":
+                        var sqlSelect2=new SelectAllProducts();
+                        Vector<Product> products = sqlSelect2.executeSelect(dbConnection.getMyConnection());
+                        output_stream.writeObject(products);
                         break;
                 }
             }

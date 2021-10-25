@@ -27,7 +27,7 @@
                </image>
             </ImageView>
       </children></AnchorPane>
-    <Label alignment="CENTER" layoutX="282.0" layoutY="14.0" prefHeight="35.0" prefWidth="335.0" text="Добро пожаловать!" textAlignment="CENTER">
+    <Label fx:id="headLabel" alignment="CENTER" layoutX="282.0" layoutY="14.0" prefHeight="35.0" prefWidth="335.0" text="Добро пожаловать!" textAlignment="CENTER">
          <font>
             <Font name="Georgia" size="28.0" />
          </font>

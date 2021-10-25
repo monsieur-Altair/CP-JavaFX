@@ -1,17 +1,12 @@
 package com.gui.controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-import java.util.Vector;
-
 import com.SQLsupport.DBClass.Manufacturer;
+import com.SQLsupport.DBClass.Product;
 import com.gui.MainMenuGUI;
 import com.implementation.client.OwnClient;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -20,57 +15,62 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.w3c.dom.events.MouseEvent;
 
-import static com.gui.Constants.DARK_THEME_PATH;
-import static com.gui.Constants.LIGHT_THEME_PATH;
+import java.util.Vector;
 
-public class UserManufacturerController extends UserMenuController{
+import static com.gui.Constants.*;
 
-    private ObservableList<Manufacturer> list;
+public class UserProductsController extends UserMenuController{
 
-    @FXML
-    private TableColumn<Manufacturer, String> countryColumn;
+    private ObservableList<Product> list;
 
     @FXML
-    private TableColumn<Manufacturer, String> emailColumn;
+    private TableColumn<Product, Integer> costColumn;
 
     @FXML
-    private TableColumn<Manufacturer, Integer> idColumn;
+    private TableColumn<Product, Integer> countColumn;
 
     @FXML
-    private TableView<Manufacturer> manufacturerTable;
+    private TableColumn<Product, Integer> idColumn;
 
     @FXML
-    private TableColumn<Manufacturer, String> nameColumn;
+    private TableColumn<Product, String> manufacturerColumn;
 
     @FXML
-    private TableColumn<Manufacturer, Double> ratingColumn;
+    private TableView<Product> productsTable;
 
     @FXML
-    void initialize() {
+    private TableColumn<Product, String> nameColumn;
+
+    @FXML
+    private TableColumn<Product, String> typeColumn;
+
+    @FXML
+    void initialize(){
         super.client = OwnClient.getInstance();
 
         String path=!super.client.isDarkTheme()?LIGHT_THEME_PATH:DARK_THEME_PATH;
         switchTheme(path);
 
         list= FXCollections.observableArrayList();
-        idColumn.setCellValueFactory(new PropertyValueFactory<Manufacturer,Integer>("id_manufacturer"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<Manufacturer,String>("name"));
-        countryColumn.setCellValueFactory(new PropertyValueFactory<Manufacturer,String>("country"));
-        emailColumn.setCellValueFactory(new PropertyValueFactory<Manufacturer,String>("email"));
-        ratingColumn.setCellValueFactory(new PropertyValueFactory<Manufacturer,Double>("rating"));
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id_product"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        costColumn.setCellValueFactory(new PropertyValueFactory<>("cost"));
+        countColumn.setCellValueFactory(new PropertyValueFactory<>("count"));
+        manufacturerColumn.setCellValueFactory(new PropertyValueFactory<>("id_manufacturer"));
 
-        super.client.sendDataToServer("select all manufacturer");
+        super.client.sendDataToServer("select all products");
         super.client.sendDataToServer(" ");
-        Vector<Manufacturer> manufacturers = super.client.receiveManufacturers();
+        Vector<Product> products = super.client.receiveProducts();
         list.clear();
-        list.addAll(manufacturers);
-        manufacturerTable.setItems(list);
+        list.addAll(products);
+        productsTable.setItems(list);
 
         this.initMainButtons();
     }
 
+    @Override
     public void initMainButtons(){
 
         super.initMainButtons();
@@ -81,6 +81,7 @@ public class UserManufacturerController extends UserMenuController{
             super.client.switchTheme();
         });
     }
+
 
     public void switchTheme(String path){
 
@@ -97,12 +98,12 @@ public class UserManufacturerController extends UserMenuController{
         super.leftPane.getStyleClass().add("left");
         super.headLabel.getStyleClass().add("label-header");
 
-        manufacturerTable.getStyleClass().add("table-view");
+        productsTable.getStyleClass().add("table-view");
         idColumn.getStyleClass().add("column-header-background");
-        countryColumn.getStyleClass().add("column-header-background");
-        ratingColumn.getStyleClass().add("column-header-background");
-        emailColumn.getStyleClass().add("column-header-background");
+        typeColumn.getStyleClass().add("column-header-background");
+        costColumn.getStyleClass().add("column-header-background");
+        countColumn.getStyleClass().add("column-header-background");
         nameColumn.getStyleClass().add("column-header-background");
+        manufacturerColumn.getStyleClass().add("column-header-background");
     }
-
 }
