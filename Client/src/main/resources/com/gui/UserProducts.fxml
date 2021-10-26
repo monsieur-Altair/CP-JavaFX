@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -58,7 +59,7 @@
                   <Insets top="20.0" />
                </padding>
             </VBox>
-            <TableView fx:id="productsTable" layoutX="183.0" layoutY="14.0" prefHeight="486.0" prefWidth="628.0">
+            <TableView fx:id="productsTable" layoutX="181.0" layoutY="81.0" prefHeight="486.0" prefWidth="631.0">
               <columns>
                 <TableColumn fx:id="idColumn" prefWidth="70.4000244140625" text="Номер" />
                 <TableColumn fx:id="nameColumn" prefWidth="145.59996032714844" text="Название" />
@@ -68,6 +69,31 @@
                   <TableColumn fx:id="manufacturerColumn" prefWidth="148.79998779296875" text="Производитель" />
               </columns>
             </TableView>
+            <TextField fx:id="searchField" layoutX="181.0" layoutY="26.0" prefHeight="23.0" prefWidth="155.0" promptText="Выберите товар">
+               <font>
+                  <Font name="Georgia" size="12.0" />
+               </font>
+            </TextField>
+            <Button fx:id="searchButton" layoutX="353.0" layoutY="21.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Поиск">
+               <font>
+                  <Font name="Euclid Math One Bold" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="filterButton" layoutX="648.0" layoutY="21.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Фильтр">
+               <font>
+                  <Font name="Euclid Math One Bold" size="18.0" />
+               </font>
+            </Button>
+            <TextField fx:id="filterField" layoutX="478.0" layoutY="26.0" promptText="Выберите производителя">
+               <font>
+                  <Font name="Georgia" size="12.0" />
+               </font>
+            </TextField>
+            <Button fx:id="addToBasketButton" layoutX="765.0" layoutY="21.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="46.0" text="+">
+               <font>
+                  <Font name="Euclid Math One Bold" size="18.0" />
+               </font>
+            </Button>
       </children></AnchorPane>
     <Label fx:id="headLabel" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="35.0" prefWidth="822.0" text="Товары" textAlignment="CENTER" textFill="WHITE">
       <font>

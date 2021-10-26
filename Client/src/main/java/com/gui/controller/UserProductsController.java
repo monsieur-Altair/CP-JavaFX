@@ -1,28 +1,19 @@
 package com.gui.controller;
 
-import com.SQLsupport.DBClass.Manufacturer;
 import com.SQLsupport.DBClass.Product;
 import com.gui.MainMenuGUI;
 import com.implementation.client.OwnClient;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-
-import java.util.Vector;
 
 import static com.gui.Constants.*;
 
 public class UserProductsController extends UserMenuController{
 
-    private ObservableList<Product> list;
+    private ObservableList<Product> dataFromServer, selectableProductList;
 
     @FXML
     private TableColumn<Product, Integer> costColumn;
@@ -46,28 +37,75 @@ public class UserProductsController extends UserMenuController{
     private TableColumn<Product, String> typeColumn;
 
     @FXML
+    private TextField searchField;
+
+    @FXML
+    private Button addToBasketButton;
+
+    @FXML
+    private TextField filterField;
+
+    @FXML
+    private Button filterButton;
+
+    @FXML
+    private Button searchButton;
+
+    @FXML
     void initialize(){
         super.client = OwnClient.getInstance();
 
         String path=!super.client.isDarkTheme()?LIGHT_THEME_PATH:DARK_THEME_PATH;
         switchTheme(path);
 
-        list= FXCollections.observableArrayList();
+        dataFromServer = FXCollections.observableArrayList();
+        selectableProductList = FXCollections.observableArrayList();
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id_product"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
         costColumn.setCellValueFactory(new PropertyValueFactory<>("cost"));
         countColumn.setCellValueFactory(new PropertyValueFactory<>("count"));
-        manufacturerColumn.setCellValueFactory(new PropertyValueFactory<>("id_manufacturer"));
+        manufacturerColumn.setCellValueFactory(new PropertyValueFactory<>("nameManufacturer"));
 
+        this.selectAllProducts();
+        this.initMainButtons();
+
+        searchButton.setOnMouseClicked(event -> {selectOneProduct();});
+        filterButton.setOnMouseClicked(event -> { selectProductByManufacturer();});
+    }
+
+    public void selectAllProducts(){
         super.client.sendDataToServer("select all products");
         super.client.sendDataToServer(" ");
-        Vector<Product> products = super.client.receiveProducts();
-        list.clear();
-        list.addAll(products);
-        productsTable.setItems(list);
+        dataFromServer.clear();
+        dataFromServer.addAll(super.client.receiveProducts());
+        productsTable.setItems(dataFromServer);
+    }
 
-        this.initMainButtons();
+    public void selectOneProduct(){
+        String selectableName= searchField.getText();
+        if(selectableName.equals(""))
+            return;
+        super.client.sendDataToServer("select one product");
+        super.client.sendDataToServer(selectableName);
+        this.updateTable();
+    }
+
+    public void selectProductByManufacturer(){
+        String selectableManufacturerName= filterField.getText();
+        if(selectableManufacturerName.equals(""))
+            return;
+        super.client.sendDataToServer("select by manufacturer");
+        super.client.sendDataToServer(selectableManufacturerName);
+        this.updateTable();
+    }
+
+    public void updateTable(){
+        dataFromServer.clear();
+        dataFromServer.addAll(super.client.receiveProducts());
+        productsTable.setItems(dataFromServer);
+        filterField.setText("");
+        searchField.setText("");
     }
 
     @Override
@@ -80,6 +118,19 @@ public class UserProductsController extends UserMenuController{
             switchTheme(path1);
             super.client.switchTheme();
         });
+
+        productsTable.getSelectionModel().selectedItemProperty().addListener(
+                (obs,oldSelection,newSelection)->{
+                    if(newSelection!=null){
+                        selectableProductList.clear();
+                        selectableProductList.add(productsTable.getSelectionModel().getSelectedItem());
+                        String selectableName = selectableProductList.get(0).getName();
+                        String selectableManuf = selectableProductList.get(0).getNameManufacturer();
+                        filterField.setText(selectableManuf);
+                        searchField.setText(selectableName);
+                    }
+                }
+        );
     }
 
 
@@ -96,14 +147,5 @@ public class UserProductsController extends UserMenuController{
         super.headerPane.getStyleClass().add("header");
         super.mainPane.getStyleClass().add("main");
         super.leftPane.getStyleClass().add("left");
-        super.headLabel.getStyleClass().add("label-header");
-
-        productsTable.getStyleClass().add("table-view");
-        idColumn.getStyleClass().add("column-header-background");
-        typeColumn.getStyleClass().add("column-header-background");
-        costColumn.getStyleClass().add("column-header-background");
-        countColumn.getStyleClass().add("column-header-background");
-        nameColumn.getStyleClass().add("column-header-background");
-        manufacturerColumn.getStyleClass().add("column-header-background");
     }
 }

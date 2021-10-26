@@ -96,6 +96,7 @@ public class UserMenuController {
 
         closeButton.setOnMouseClicked(event->{
             client.sendDataToServer("exit");
+            client.sendDataToServer(" ");
             stage = (Stage)closeButton.getScene().getWindow();
             stage.close();
         });
@@ -113,7 +114,6 @@ public class UserMenuController {
         headerPane.getStyleClass().add("header");
         mainPane.getStyleClass().add("main");
         leftPane.getStyleClass().add("left");
-        headLabel.getStyleClass().add("label-header");
     }
 
     public void switchScene(MouseEvent event, String path){

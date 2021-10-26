@@ -8,15 +8,15 @@ public class Product implements Serializable {
     private String type;
     private int cost;
     private int count;
-    private String id_manufacturer;
+    private String nameManufacturer;
 
-    public Product(int id_product, String name, String type, int cost, int count, String id_manufacturer) {
+    public Product(int id_product, String name, String type, int cost, int count, String nameManufacturer) {
         this.id_product = id_product;
         this.name = name;
         this.type = type;
         this.cost = cost;
         this.count = count;
-        this.id_manufacturer = id_manufacturer;
+        this.nameManufacturer = nameManufacturer;
     }
 
     public int getId_product() {
@@ -39,7 +39,7 @@ public class Product implements Serializable {
         return count;
     }
 
-    public String getId_manufacturer() {
-        return id_manufacturer;
+    public String getNameManufacturer() {
+        return nameManufacturer;
     }
 }

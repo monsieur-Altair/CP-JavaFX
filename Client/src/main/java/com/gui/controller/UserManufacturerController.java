@@ -95,14 +95,7 @@ public class UserManufacturerController extends UserMenuController{
         super.headerPane.getStyleClass().add("header");
         super.mainPane.getStyleClass().add("main");
         super.leftPane.getStyleClass().add("left");
-        super.headLabel.getStyleClass().add("label-header");
 
-        manufacturerTable.getStyleClass().add("table-view");
-        idColumn.getStyleClass().add("column-header-background");
-        countryColumn.getStyleClass().add("column-header-background");
-        ratingColumn.getStyleClass().add("column-header-background");
-        emailColumn.getStyleClass().add("column-header-background");
-        nameColumn.getStyleClass().add("column-header-background");
     }
 
 }

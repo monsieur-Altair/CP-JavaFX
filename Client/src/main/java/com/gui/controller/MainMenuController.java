@@ -60,7 +60,6 @@ public class MainMenuController {
         headerPane.getStylesheets().add(css);
         headerPane.getStyleClass().add("header");
         mainPane.getStyleClass().add("main");
-        headLabel.getStyleClass().add("label-header");
     }
 
     public void switchToRegisterScene(ActionEvent event) throws IOException{

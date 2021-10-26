@@ -1,13 +1,11 @@
 package com.SQLsupport.strategies;
 
 import com.SQLsupport.Requestable;
-import com.SQLsupport.Selectable;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Vector;
 
 import com.SQLsupport.DBClass.User;

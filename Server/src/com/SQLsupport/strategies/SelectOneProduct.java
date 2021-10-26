@@ -1,6 +1,5 @@
 package com.SQLsupport.strategies;
 
-import com.SQLsupport.DBClass.Manufacturer;
 import com.SQLsupport.DBClass.Product;
 import com.SQLsupport.Requestable;
 import com.SQLsupport.SelectableProduct;
@@ -12,11 +11,14 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 import static com.SQLsupport.Constants.*;
+import static java.lang.Integer.parseInt;
 
-public class SelectAllProducts implements SelectableProduct {
+public class SelectOneProduct implements SelectableProduct {
+    String nameProduct;
+
     @Override
     public void getData(String data) {
-
+        nameProduct = data;
     }
 
     @Override
@@ -37,9 +39,11 @@ public class SelectAllProducts implements SelectableProduct {
                     " INNER JOIN "+DB_NAME+"."+MANUFACTURER_SCHEMA+
                     " ON "+PRODUCT_SCHEMA+"."+PRODUCT_MANUFACTURER+"="+
                     MANUFACTURER_SCHEMA+"."+MANUFACTURER_ID+
+                    " AND "+PRODUCT_SCHEMA+"."+PRODUCT_NAME+"=?"+
                     " ORDER BY "+PRODUCT_SCHEMA+"."+PRODUCT_ID;
 
             try(PreparedStatement prepStmt=conn.prepareStatement(sql1)){
+                prepStmt.setString(1, nameProduct);
                 res = prepStmt.executeQuery();
                 products = new Vector<>();
                 while(res.next()){

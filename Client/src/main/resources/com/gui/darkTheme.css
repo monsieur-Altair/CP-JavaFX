@@ -3,6 +3,7 @@
 fafafa - white for text
 3f3f3f - light gray for main body
 191919 - almost black for left menu
+740BB8 - purple for selected
 */
 
 
@@ -26,31 +27,49 @@ fafafa - white for text
     -fx-font-family: Georgia;
 }
 
-.label{
-    -fx-text-fill: "#fafafa";
-    -fx-font-family: Georgia;
-    -fx-font-size: 15;
-    -fx-alignment: center;
+.text-field{
+    -fx-background-radius: 10;
 }
 
-.label-header{
+.label{
     -fx-text-fill: "#fafafa";
     -fx-font-family: Georgia;
     -fx-font-size: 28;
     -fx-alignment: center;
 }
 
-.table-view{
-    -fx-text-fill:"#fafafa";
-    -fx-font-family: Georgia;
-    -fx-background-color: "#fafafa";
+.table-view {
+    -fx-background-color: transparent;
 }
 
-.column-header-background{
+.table-view .column-header-background .filler {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background{
+    -fx-background-color: black;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-border-color: white;
+}
+
+.table-view .column-header .label{
     -fx-font-size: 15;
-    -fx-alignment: center;
-    -fx-text-fill: "#fafafa";
+}
+
+.table-view .table-cell{
+    -fx-border-color: white;
+    -fx-text-fill: white;
+    -fx-font-size: 15;
     -fx-font-family: Georgia;
+}
+
+ .table-row-cell: selected {
+    -fx-background-color: "#740BB8";
+}
+
+.table-row-cell{
     -fx-background-color: "#2c2c2c";
-    -fx-border-color: "#fafafa";
 }

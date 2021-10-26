@@ -1,8 +1,6 @@
 package com.SQLsupport.strategies;
 
-import com.SQLsupport.DBClass.Manufacturer;
 import com.SQLsupport.DBClass.Product;
-import com.SQLsupport.Requestable;
 import com.SQLsupport.SelectableProduct;
 
 import java.sql.Connection;
@@ -13,14 +11,17 @@ import java.util.Vector;
 
 import static com.SQLsupport.Constants.*;
 
-public class SelectAllProducts implements SelectableProduct {
+public class SelectProductsByManufacturer implements SelectableProduct {
+
+    private String nameOfManufacturer;
+
     @Override
     public void getData(String data) {
-
+        nameOfManufacturer=data;
     }
 
     @Override
-    public Vector<Product> executeSelect(Connection conn){
+    public Vector<Product> executeSelect(Connection conn) {
         int count=1;
         ResultSet res=null;
         Vector<Product> products=null;
@@ -35,11 +36,12 @@ public class SelectAllProducts implements SelectableProduct {
                     MANUFACTURER_SCHEMA+"." +MANUFACTURER_NAME+
                     " FROM "+DB_NAME+"."+PRODUCT_SCHEMA+
                     " INNER JOIN "+DB_NAME+"."+MANUFACTURER_SCHEMA+
-                    " ON "+PRODUCT_SCHEMA+"."+PRODUCT_MANUFACTURER+"="+
-                    MANUFACTURER_SCHEMA+"."+MANUFACTURER_ID+
+                    " ON "+PRODUCT_SCHEMA+"."+PRODUCT_MANUFACTURER+"="+ MANUFACTURER_SCHEMA+"."+MANUFACTURER_ID+
+                    " AND "+MANUFACTURER_SCHEMA+"."+MANUFACTURER_NAME+"=?"+
                     " ORDER BY "+PRODUCT_SCHEMA+"."+PRODUCT_ID;
 
             try(PreparedStatement prepStmt=conn.prepareStatement(sql1)){
+                prepStmt.setString(1, nameOfManufacturer);
                 res = prepStmt.executeQuery();
                 products = new Vector<>();
                 while(res.next()){
