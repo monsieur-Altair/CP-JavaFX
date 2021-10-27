@@ -59,14 +59,14 @@
                   <Insets top="20.0" />
                </padding>
             </VBox>
-            <TableView fx:id="productsTable" layoutX="181.0" layoutY="81.0" prefHeight="486.0" prefWidth="631.0">
+            <TableView fx:id="productsTable" layoutX="181.0" layoutY="141.0" prefHeight="418.0" prefWidth="631.0">
               <columns>
                 <TableColumn fx:id="idColumn" prefWidth="70.4000244140625" text="Номер" />
                 <TableColumn fx:id="nameColumn" prefWidth="145.59996032714844" text="Название" />
                   <TableColumn fx:id="typeColumn" minWidth="0.0" prefWidth="99.20001220703125" text="Тип" />
                   <TableColumn fx:id="costColumn" prefWidth="74.4000244140625" text="Цена($)" />
                   <TableColumn fx:id="countColumn" minWidth="0.0" prefWidth="84.79998779296875" text="На складе" />
-                  <TableColumn fx:id="manufacturerColumn" prefWidth="148.79998779296875" text="Производитель" />
+                  <TableColumn fx:id="manufacturerColumn" prefWidth="151.19989013671875" text="Производитель" />
               </columns>
             </TableView>
             <TextField fx:id="searchField" layoutX="181.0" layoutY="26.0" prefHeight="23.0" prefWidth="155.0" promptText="Выберите товар">
@@ -74,22 +74,27 @@
                   <Font name="Georgia" size="12.0" />
                </font>
             </TextField>
-            <Button fx:id="searchButton" layoutX="353.0" layoutY="21.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Поиск">
+            <Button fx:id="searchButton" layoutX="349.0" layoutY="73.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Поиск">
                <font>
                   <Font name="Euclid Math One Bold" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="filterButton" layoutX="648.0" layoutY="21.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Фильтр">
+            <Button fx:id="filterButton" layoutX="712.0" layoutY="73.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Фильтр">
                <font>
                   <Font name="Euclid Math One Bold" size="18.0" />
                </font>
             </Button>
-            <TextField fx:id="filterField" layoutX="478.0" layoutY="26.0" promptText="Выберите производителя">
+            <TextField fx:id="filterField" layoutX="648.0" layoutY="26.0" prefHeight="23.0" prefWidth="163.0" promptText="Выберите производителя">
                <font>
                   <Font name="Georgia" size="12.0" />
                </font>
             </TextField>
-            <Button fx:id="addToBasketButton" layoutX="765.0" layoutY="21.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="46.0" text="+">
+            <Button fx:id="addToBasketButton" layoutX="181.0" layoutY="73.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="154.0" text="В корзину">
+               <font>
+                  <Font name="Euclid Math One Bold" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="reviewButton" layoutX="349.0" layoutY="20.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Отзывы">
                <font>
                   <Font name="Euclid Math One Bold" size="18.0" />
                </font>

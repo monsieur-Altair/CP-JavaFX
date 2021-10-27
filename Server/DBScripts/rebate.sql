@@ -8,4 +8,6 @@ CREATE TABLE IF NOT EXISTS `rebate`(
     FOREIGN KEY (`id_manufacturer`)
         REFERENCES manufacturer(id_manufacturer)
         ON DELETE CASCADE
+
+                                   #add another for key
 ) DEFAULT CHARSET=utf8;

@@ -1,8 +1,6 @@
 package com.gui.controller;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import com.gui.MainMenuGUI;
 import com.implementation.client.OwnClient;
@@ -74,14 +72,6 @@ public class UserMenuController {
         headLabel.setText("Добро пожаловать, "+client.getUserProfile().getLogin()+"!");
 
         initMainButtons();
-
-        themeButton.setOnMouseClicked((event)->{
-            String path1=client.isDarkTheme()?LIGHT_THEME_PATH:DARK_THEME_PATH;
-            switchTheme(path1);
-            client.switchTheme();
-        });
-
-
     }
 
     public void initMainButtons(){
@@ -97,12 +87,19 @@ public class UserMenuController {
         closeButton.setOnMouseClicked(event->{
             client.sendDataToServer("exit");
             client.sendDataToServer(" ");
+            client.close();
             stage = (Stage)closeButton.getScene().getWindow();
             stage.close();
         });
+
+        themeButton.setOnMouseClicked((event)->{
+            String path1=client.isDarkTheme()?LIGHT_THEME_PATH:DARK_THEME_PATH;
+            switchTheme(path1);
+            client.switchTheme();
+        });
     }
 
-    private void switchTheme(String themePath){
+    public void switchTheme(String themePath){
         ObservableList<String> styleSheets=headerPane.getStylesheets();
 
         String css = MainMenuGUI.class.getResource(themePath).toExternalForm();

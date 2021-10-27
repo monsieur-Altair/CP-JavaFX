@@ -43,6 +43,9 @@ public class UserProductsController extends UserMenuController{
     private Button addToBasketButton;
 
     @FXML
+    private Button reviewButton;
+
+    @FXML
     private TextField filterField;
 
     @FXML
@@ -56,7 +59,7 @@ public class UserProductsController extends UserMenuController{
         super.client = OwnClient.getInstance();
 
         String path=!super.client.isDarkTheme()?LIGHT_THEME_PATH:DARK_THEME_PATH;
-        switchTheme(path);
+        super.switchTheme(path);
 
         dataFromServer = FXCollections.observableArrayList();
         selectableProductList = FXCollections.observableArrayList();
@@ -69,17 +72,12 @@ public class UserProductsController extends UserMenuController{
 
         this.selectAllProducts();
         this.initMainButtons();
-
-        searchButton.setOnMouseClicked(event -> {selectOneProduct();});
-        filterButton.setOnMouseClicked(event -> { selectProductByManufacturer();});
     }
 
     public void selectAllProducts(){
         super.client.sendDataToServer("select all products");
         super.client.sendDataToServer(" ");
-        dataFromServer.clear();
-        dataFromServer.addAll(super.client.receiveProducts());
-        productsTable.setItems(dataFromServer);
+        this.updateTable();
     }
 
     public void selectOneProduct(){
@@ -113,12 +111,6 @@ public class UserProductsController extends UserMenuController{
 
         super.initMainButtons();
 
-        super.themeButton.setOnMouseClicked((event)->{
-            String path1=super.client.isDarkTheme()?LIGHT_THEME_PATH:DARK_THEME_PATH;
-            switchTheme(path1);
-            super.client.switchTheme();
-        });
-
         productsTable.getSelectionModel().selectedItemProperty().addListener(
                 (obs,oldSelection,newSelection)->{
                     if(newSelection!=null){
@@ -131,21 +123,12 @@ public class UserProductsController extends UserMenuController{
                     }
                 }
         );
+
+        searchButton.setOnMouseClicked(event -> {selectOneProduct();});
+        filterButton.setOnMouseClicked(event -> {selectProductByManufacturer();});
+        reviewButton.setOnMouseClicked(event -> {
+            super.client.setSelectableProductForReview(selectableProductList.get(0));
+            super.switchScene(event,PRODUCTS_REVIEW_FXML);});
     }
 
-
-    public void switchTheme(String path){
-
-        ObservableList<String> styleSheets=super.headerPane.getStylesheets();
-
-        String css = MainMenuGUI.class.getResource(path).toExternalForm();
-        styleSheets.add(css);
-
-        if(styleSheets.size()>1)
-            styleSheets.remove(0);
-
-        super.headerPane.getStyleClass().add("header");
-        super.mainPane.getStyleClass().add("main");
-        super.leftPane.getStyleClass().add("left");
-    }
 }

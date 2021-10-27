@@ -30,4 +30,10 @@ public class Constants {
     public static final String PRODUCT_COUNT="count";
     public static final String PRODUCT_MANUFACTURER="id_manufacturer";
 
+    public static final String REVIEW_SCHEMA="review";
+    public static final String REVIEW_ID="id_review";
+    public static final String REVIEW_USER="id_user";
+    public static final String REVIEW_PRODUCT="id_product";
+    public static final String REVIEW_TEXT="review_text";
+
 }

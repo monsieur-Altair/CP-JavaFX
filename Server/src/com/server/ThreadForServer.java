@@ -2,6 +2,7 @@ package com.server;
 
 import com.SQLsupport.DBClass.Manufacturer;
 import com.SQLsupport.DBClass.Product;
+import com.SQLsupport.DBClass.Review;
 import com.SQLsupport.DBClass.User;
 import com.SQLsupport.SelectableProduct;
 import com.SQLsupport.strategies.*;
@@ -54,6 +55,8 @@ public class ThreadForServer implements Runnable{
                 Updatable sqlUpdate=null;
                 switch (clientChoice) {
                     case "registration" -> sqlUpdate = new AddUser();
+                    case "add review" -> sqlUpdate=new AddReview();
+                    case "add mark to manufacturer" -> sqlUpdate=new AddMark();
                     case "exit" -> {
                         try {
                             System.out.println("client " + currentClient + " disconnected");
@@ -64,7 +67,6 @@ public class ThreadForServer implements Runnable{
                         }
                         return;
                     }
-                    default -> {}
                 }
                 if(sqlUpdate!=null){
                     sqlUpdate.getData(dataFromClient);
@@ -86,19 +88,25 @@ public class ThreadForServer implements Runnable{
                         Vector<Manufacturer> manufacturers = sqlSelect1.executeSelect(dbConnection.getMyConnection());
                         output_stream.writeObject(manufacturers);
                     }
+                    case "select all reviews" ->{
+                        var sqlSelect2=new SelectReviewsForProduct();
+                        sqlSelect2.getData(dataFromClient);
+                        Vector<Review> reviews = sqlSelect2.executeSelect(dbConnection.getMyConnection());
+                        output_stream.writeObject(reviews);
+                    }
                 }
 
 
                 //all selects of products
-                SelectableProduct sqlSelect2=null;
+                SelectableProduct sqlSelectProduct=null;
                 switch (clientChoice) {
-                    case "select all products" -> sqlSelect2 = new SelectAllProducts();
-                    case "select one product" -> sqlSelect2 = new SelectOneProduct();
-                    case "select by manufacturer" -> sqlSelect2 = new SelectProductsByManufacturer();
+                    case "select all products" -> sqlSelectProduct = new SelectAllProducts();
+                    case "select one product" -> sqlSelectProduct = new SelectOneProduct();
+                    case "select by manufacturer" -> sqlSelectProduct = new SelectProductsByManufacturer();
                 }
-                if(sqlSelect2!=null){
-                    sqlSelect2.getData(dataFromClient);
-                    Vector<Product> product = sqlSelect2.executeSelect(dbConnection.getMyConnection());
+                if(sqlSelectProduct!=null){
+                    sqlSelectProduct.getData(dataFromClient);
+                    Vector<Product> product = sqlSelectProduct.executeSelect(dbConnection.getMyConnection());
                     output_stream.writeObject(product);
                 }
 

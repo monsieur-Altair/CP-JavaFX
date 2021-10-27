@@ -4,6 +4,7 @@ package com.implementation.client;
 
 import com.SQLsupport.DBClass.Manufacturer;
 import com.SQLsupport.DBClass.Product;
+import com.SQLsupport.DBClass.Review;
 import com.SQLsupport.DBClass.User;
 
 import java.io.IOException;
@@ -20,6 +21,7 @@ public class OwnClient {
     private ObjectInputStream input_stream;
     private Scanner scan;
     private static OwnClient ownClient=null;
+    private Product selectableProductForReview;
     private User user=null;
     private boolean isRussianLanguage;
     private boolean isDarkTheme;
@@ -38,12 +40,21 @@ public class OwnClient {
             output_stream = new ObjectOutputStream(client.getOutputStream());
             input_stream = new ObjectInputStream(client.getInputStream());
             scan = new Scanner(System.in);
+            selectableProductForReview=null;
             isDarkTheme=true;
             isRussianLanguage=true;
             System.out.println("connection established...");
         }catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    public Product getSelectableProductForReview() {
+        return selectableProductForReview;
+    }
+
+    public void setSelectableProductForReview(Product selectableProductForReview) {
+        this.selectableProductForReview = selectableProductForReview;
     }
 
     public void switchLanguage(){
@@ -108,15 +119,28 @@ public class OwnClient {
         return null;
     }
 
-    public void Close() throws IOException{
-        output_stream.close();
-        input_stream.close();
-        client.close();
+    public void close(){
+        try {
+            output_stream.close();
+            input_stream.close();
+            client.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public Vector<Product> receiveProducts() {
         try {
             return (Vector<Product>) input_stream.readObject();
+        }catch (IOException |ClassNotFoundException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Vector<Review> receiveReviews() {
+        try {
+            return (Vector<Review>) input_stream.readObject();
         }catch (IOException |ClassNotFoundException e){
             e.printStackTrace();
         }

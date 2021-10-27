@@ -19,6 +19,30 @@ public class Manufacturer implements Serializable {
         this.number_of_ratings = number_of_ratings;
     }
 
+    public void setId_manufacturer(int id_manufacturer) {
+        this.id_manufacturer = id_manufacturer;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public void setNumber_of_ratings(int number_of_ratings) {
+        this.number_of_ratings = number_of_ratings;
+    }
+
     public int getId_manufacturer() {
         return id_manufacturer;
     }
