@@ -1,9 +1,6 @@
 package com.server;
 
-import com.SQLsupport.DBClass.Manufacturer;
-import com.SQLsupport.DBClass.Product;
-import com.SQLsupport.DBClass.Review;
-import com.SQLsupport.DBClass.User;
+import com.SQLsupport.DBClass.*;
 import com.SQLsupport.SelectableProduct;
 import com.SQLsupport.strategies.*;
 import com.SQLsupport.DBConnection;
@@ -30,7 +27,7 @@ public class ThreadForServer implements Runnable{
             client=serverSocket.accept();
             allClientCount++;
             currentClient=allClientCount;
-            System.out.println("client " +currentClient+" connected");
+            System.out.println("client №" +currentClient+" connected");
             input_stream = new ObjectInputStream(client.getInputStream());
             output_stream = new ObjectOutputStream(client.getOutputStream());
             this.dbConnection=dbConnection;
@@ -57,9 +54,14 @@ public class ThreadForServer implements Runnable{
                     case "registration" -> sqlUpdate = new AddUser();
                     case "add review" -> sqlUpdate=new AddReview();
                     case "add mark to manufacturer" -> sqlUpdate=new AddMark();
+                    case "add to basket" -> sqlUpdate=new AddToBasket();
+                    case "delete one purchase"->sqlUpdate=new DeleteOnePurchase();
+                    case "delete all purchases"->sqlUpdate=new DeleteAllPurchases();
+                    case "buy one product"->sqlUpdate=new BuyProduct();
+                    case "buy all products"->sqlUpdate=new BuyProduct();
                     case "exit" -> {
                         try {
-                            System.out.println("client " + currentClient + " disconnected");
+                            System.out.println("client №" + currentClient + " disconnected");
                             allClientCount--;
                             this.Release();
                         } catch (IOException e) {
@@ -72,6 +74,19 @@ public class ThreadForServer implements Runnable{
                     sqlUpdate.getData(dataFromClient);
                     boolean res = sqlUpdate.executeUpdate(dbConnection.getMyConnection());
                     output_stream.writeObject(res);
+                }
+
+                //all selects of products
+                SelectableProduct sqlSelectProduct=null;
+                switch (clientChoice) {
+                    case "select all products" -> sqlSelectProduct = new SelectAllProducts();
+                    case "select one product" -> sqlSelectProduct = new SelectOneProduct();
+                    case "select by manufacturer" -> sqlSelectProduct = new SelectProductsByManufacturer();
+                }
+                if(sqlSelectProduct!=null){
+                    sqlSelectProduct.getData(dataFromClient);
+                    Vector<Product> product = sqlSelectProduct.executeSelect(dbConnection.getMyConnection());
+                    output_stream.writeObject(product);
                 }
 
 
@@ -94,22 +109,19 @@ public class ThreadForServer implements Runnable{
                         Vector<Review> reviews = sqlSelect2.executeSelect(dbConnection.getMyConnection());
                         output_stream.writeObject(reviews);
                     }
+                    case "select all purchases"->{
+                        var sqlSelect3=new SelectAllPurchases();
+                        sqlSelect3.getData(dataFromClient);
+                        Vector<Purchase> purchases = sqlSelect3.executeSelect(dbConnection.getMyConnection());
+                        output_stream.writeObject(purchases);
+                    }
+                    case "print basket"->{
+                        var sqlSelect3=new PrintBasket();
+                        sqlSelect3.getData(dataFromClient);
+                        String filePath = sqlSelect3.execute(dbConnection.getMyConnection());
+                        output_stream.writeObject(filePath);
+                    }
                 }
-
-
-                //all selects of products
-                SelectableProduct sqlSelectProduct=null;
-                switch (clientChoice) {
-                    case "select all products" -> sqlSelectProduct = new SelectAllProducts();
-                    case "select one product" -> sqlSelectProduct = new SelectOneProduct();
-                    case "select by manufacturer" -> sqlSelectProduct = new SelectProductsByManufacturer();
-                }
-                if(sqlSelectProduct!=null){
-                    sqlSelectProduct.getData(dataFromClient);
-                    Vector<Product> product = sqlSelectProduct.executeSelect(dbConnection.getMyConnection());
-                    output_stream.writeObject(product);
-                }
-
             }
             catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();

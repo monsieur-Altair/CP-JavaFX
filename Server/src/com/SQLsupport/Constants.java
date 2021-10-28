@@ -36,4 +36,9 @@ public class Constants {
     public static final String REVIEW_PRODUCT="id_product";
     public static final String REVIEW_TEXT="review_text";
 
+    public static final String PURCHASE_SCHEMA="purchase";
+    public static final String PURCHASE_ID="id_purchase";
+    public static final String PURCHASE_USER="id_user";
+    public static final String PURCHASE_PRODUCT="id_product";
+
 }

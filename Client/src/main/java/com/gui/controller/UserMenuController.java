@@ -76,13 +76,9 @@ public class UserMenuController {
 
     public void initMainButtons(){
 
-        productButton.setOnMouseClicked(event -> {
-            switchScene(event,USER_PRODUCTS_FXML);
-        });
-
-        manufacturerButton.setOnMouseClicked(event->{
-            switchScene(event,USER_MANUFACTURER_FXML);
-        });
+        productButton.setOnMouseClicked(event -> {switchScene(event,USER_PRODUCTS_FXML);});
+        manufacturerButton.setOnMouseClicked(event->{switchScene(event,USER_MANUFACTURER_FXML); });
+        basketButton.setOnMouseClicked(event->{switchScene(event,USER_BASKET_FXML); });
 
         closeButton.setOnMouseClicked(event->{
             client.sendDataToServer("exit");

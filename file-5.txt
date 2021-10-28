@@ -1,0 +1,12 @@
+id: 1
+name: GeForce 3060
+type: видеокарта
+cost: 1203
+manufacturer: Nvidia
+
+id: 4
+name: C25R365LCR
+type: монитор
+cost: 123
+manufacturer: Samsung
+

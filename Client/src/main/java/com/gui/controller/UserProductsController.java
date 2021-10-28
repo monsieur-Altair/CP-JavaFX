@@ -9,6 +9,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.util.Vector;
+
 import static com.gui.Constants.*;
 
 public class UserProductsController extends UserMenuController{
@@ -17,6 +19,9 @@ public class UserProductsController extends UserMenuController{
 
     @FXML
     private TableColumn<Product, Integer> costColumn;
+
+    @FXML
+    private Label messageLabel;
 
     @FXML
     private TableColumn<Product, Integer> countColumn;
@@ -86,7 +91,7 @@ public class UserProductsController extends UserMenuController{
             return;
         super.client.sendDataToServer("select one product");
         super.client.sendDataToServer(selectableName);
-        this.updateTable();
+
     }
 
     public void selectProductByManufacturer(){
@@ -111,6 +116,8 @@ public class UserProductsController extends UserMenuController{
 
         super.initMainButtons();
 
+        messageLabel.setText(" ");
+
         productsTable.getSelectionModel().selectedItemProperty().addListener(
                 (obs,oldSelection,newSelection)->{
                     if(newSelection!=null){
@@ -120,15 +127,35 @@ public class UserProductsController extends UserMenuController{
                         String selectableManuf = selectableProductList.get(0).getNameManufacturer();
                         filterField.setText(selectableManuf);
                         searchField.setText(selectableName);
+                        messageLabel.setText(" ");
                     }
                 }
         );
 
-        searchButton.setOnMouseClicked(event -> {selectOneProduct();});
+        searchButton.setOnMouseClicked(event -> {
+            selectOneProduct();
+            this.updateTable();
+        });
+
         filterButton.setOnMouseClicked(event -> {selectProductByManufacturer();});
         reviewButton.setOnMouseClicked(event -> {
             super.client.setSelectableProductForReview(selectableProductList.get(0));
             super.switchScene(event,PRODUCTS_REVIEW_FXML);});
+
+        addToBasketButton.setOnMouseClicked(event -> {
+            selectOneProduct();
+            Vector<Product> products = super.client.receiveProducts();
+            if(products!=null){
+                super.client.sendDataToServer("add to basket");
+                super.client.sendDataToServer(super.client.getUserProfile().getId()+" "+
+                        products.elementAt(0).getId_product());
+
+                if(super.client.receiveResult()){
+                    messageLabel.setText("Товар добавлен");
+                }
+            }
+
+        });
     }
 
 }

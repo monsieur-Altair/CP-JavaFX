@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="headerPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gui.controller.UserProductsController">
+<AnchorPane fx:id="headerPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gui.controller.UserBasketContoller">
   <children>
     <AnchorPane fx:id="mainPane" layoutX="-1.0" layoutY="58.0" prefHeight="591.0" prefWidth="850.0" AnchorPane.topAnchor="58.0">
       <children>
@@ -59,53 +59,50 @@
                   <Insets top="20.0" />
                </padding>
             </VBox>
-            <TableView fx:id="productsTable" layoutX="181.0" layoutY="141.0" prefHeight="418.0" prefWidth="631.0">
+            <TableView fx:id="purchaseTable" layoutX="181.0" layoutY="141.0" prefHeight="274.0" prefWidth="631.0">
               <columns>
                 <TableColumn fx:id="idColumn" prefWidth="70.4000244140625" text="Номер" />
-                <TableColumn fx:id="nameColumn" prefWidth="145.59996032714844" text="Название" />
-                  <TableColumn fx:id="typeColumn" minWidth="0.0" prefWidth="99.20001220703125" text="Тип" />
-                  <TableColumn fx:id="costColumn" prefWidth="74.4000244140625" text="Цена($)" />
-                  <TableColumn fx:id="countColumn" minWidth="0.0" prefWidth="84.79998779296875" text="На складе" />
-                  <TableColumn fx:id="manufacturerColumn" prefWidth="151.19989013671875" text="Производитель" />
+                <TableColumn fx:id="nameColumn" prefWidth="168.79998779296875" text="Название" />
+                  <TableColumn fx:id="typeColumn" minWidth="0.0" prefWidth="135.99996948242188" text="Тип" />
+                  <TableColumn fx:id="costColumn" prefWidth="111.20001220703125" text="Цена($)" />
+                  <TableColumn fx:id="manufacturerColumn" prefWidth="140.7999267578125" text="Производитель" />
               </columns>
             </TableView>
-            <TextField fx:id="searchField" layoutX="181.0" layoutY="26.0" prefHeight="23.0" prefWidth="155.0" promptText="Выберите товар">
+            <TextField fx:id="searchField" layoutX="181.0" layoutY="26.0" prefHeight="23.0" prefWidth="146.0" promptText="Выберите товар">
                <font>
                   <Font name="Georgia" size="12.0" />
                </font>
             </TextField>
-            <Button fx:id="searchButton" layoutX="349.0" layoutY="73.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Поиск">
+            <Button fx:id="buyOneButton" layoutX="181.0" layoutY="73.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="197.0" text="Купить выбранный">
                <font>
                   <Font name="Euclid Math One Bold" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="filterButton" layoutX="712.0" layoutY="73.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Фильтр">
+            <Button fx:id="buyAllButton" layoutX="657.0" layoutY="431.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="154.0" text="Купить всё">
                <font>
                   <Font name="Euclid Math One Bold" size="18.0" />
                </font>
             </Button>
-            <TextField fx:id="filterField" layoutX="648.0" layoutY="26.0" prefHeight="23.0" prefWidth="163.0" promptText="Выберите производителя">
-               <font>
-                  <Font name="Georgia" size="12.0" />
-               </font>
-            </TextField>
-            <Button fx:id="addToBasketButton" layoutX="181.0" layoutY="73.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="154.0" text="В корзину">
+            <Button fx:id="deleteButton" layoutX="396.0" layoutY="73.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="107.0" text="Удалить">
                <font>
                   <Font name="Euclid Math One Bold" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="reviewButton" layoutX="349.0" layoutY="20.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Отзывы">
+            <VBox layoutX="521.0" layoutY="12.0" prefHeight="122.0" prefWidth="314.0">
+               <children>
+                  <Label fx:id="currentAccountLabel" prefHeight="35.0" prefWidth="312.0" text="Ваш текущий счет: " />
+                  <Label fx:id="allCostLabel" prefHeight="35.0" prefWidth="313.0" text="Всего в корзине товаров на сумму:" />
+                  <Label fx:id="oneCostLabel" prefHeight="35.0" prefWidth="301.0" text="Выбран товар на сумму: 0" />
+               </children>
+            </VBox>
+            <Label fx:id="messageLabel" layoutX="351.0" layoutY="20.0" prefHeight="35.0" prefWidth="154.0" text="для сообщений" />
+            <Button fx:id="printButton" layoutX="181.0" layoutY="431.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="210.0" text="Распечатать корзину ">
                <font>
                   <Font name="Euclid Math One Bold" size="18.0" />
                </font>
             </Button>
-            <Label fx:id="messageLabel" alignment="CENTER" layoutX="457.0" layoutY="20.0" prefHeight="35.0" prefWidth="185.0" text="для сообщений" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font name="Euclid Fraktur Bold" size="28.0" />
-               </font>
-            </Label>
       </children></AnchorPane>
-    <Label fx:id="headLabel" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="35.0" prefWidth="822.0" text="Товары" textAlignment="CENTER" textFill="WHITE">
+    <Label fx:id="headLabel" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="35.0" prefWidth="822.0" text="Корзина" textAlignment="CENTER" textFill="WHITE">
       <font>
         <Font name="Euclid Fraktur Bold" size="28.0" />
       </font>

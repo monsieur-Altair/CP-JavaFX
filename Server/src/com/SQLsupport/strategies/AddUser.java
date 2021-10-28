@@ -37,7 +37,6 @@ public class AddUser implements Updatable {
                     USER_ROLE+","+USER_FIRST_NAME+","+ USER_LAST_NAME+","+
                     USER_MONEY+","+USER_ADDRESS+","+USER_PHONE+")"+" VALUES (?,?,?,?,?,?,?,?)";
             try(PreparedStatement prepStmt=conn.prepareStatement(sql1)){
-               // prepStmt.setInt(1, ++rowNumber);
                 prepStmt.setString(count++, login);
                 prepStmt.setString(count++, password);
                 prepStmt.setInt(count++, role);
@@ -46,9 +45,7 @@ public class AddUser implements Updatable {
                 prepStmt.setInt(count++, money);
                 prepStmt.setString(count++, address);
                 prepStmt.setString(count++, phone);
-                boolean res = prepStmt.executeUpdate() > 0;
-                System.out.println(res);
-                return res;
+                return prepStmt.executeUpdate() > 0;
             }
         }catch(SQLException e){
 

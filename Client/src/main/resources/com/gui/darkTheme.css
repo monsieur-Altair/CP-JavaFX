@@ -15,6 +15,13 @@ fafafa - white for text
     -fx-background-color: "#3f3f3f";
 }
 
+.main .label{
+    -fx-text-fill: "#fafafa";
+    -fx-font-family: Georgia;
+    -fx-font-size: 15;
+    -fx-alignment: center-left;
+ }
+
 .left{
     -fx-background-color: "#191919";
 }

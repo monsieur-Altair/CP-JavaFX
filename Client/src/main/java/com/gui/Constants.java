@@ -14,6 +14,7 @@ public class Constants {
     public static final String USER_MANUFACTURER_FXML="UserManufacturer.fxml";
     public static final String USER_PRODUCTS_FXML="UserProducts.fxml";
     public static final String PRODUCTS_REVIEW_FXML="ProductsReview.fxml";
+    public static final String USER_BASKET_FXML="UserBasket.fxml";
 
 
 }

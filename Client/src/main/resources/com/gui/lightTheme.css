@@ -13,6 +13,13 @@ d3d3d3 - more dark grey for left menu
     -fx-background-color:"#fff";
 }
 
+.main .label{
+    -fx-text-fill: black;
+    -fx-font-family: Georgia;
+    -fx-font-size: 15;
+    -fx-alignment: center-left;
+}
+
 .left{
     -fx-background-color: "#d3d3d3";
 }

@@ -17,9 +17,9 @@ public class AddMark implements Updatable {
     private String nameOfManufacturer;
     @Override
     public void getData(String data) {
-        String[] dataFromServer=data.split("@@@");
-        mark=Integer.parseInt(dataFromServer[1]);
-        nameOfManufacturer=dataFromServer[0];
+        String[] dataFromClient=data.split("@@@");
+        mark=Integer.parseInt(dataFromClient[1]);
+        nameOfManufacturer=dataFromClient[0];
     }
 
     @Override

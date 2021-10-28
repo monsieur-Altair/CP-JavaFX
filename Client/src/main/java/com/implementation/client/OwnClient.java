@@ -2,10 +2,7 @@ package com.implementation.client;
 
 
 
-import com.SQLsupport.DBClass.Manufacturer;
-import com.SQLsupport.DBClass.Product;
-import com.SQLsupport.DBClass.Review;
-import com.SQLsupport.DBClass.User;
+import com.SQLsupport.DBClass.*;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -101,6 +98,15 @@ public class OwnClient {
         return false;
     }
 
+    public String receiveFilePath(){
+        try {
+            return (String) input_stream.readObject();
+        }catch (IOException |ClassNotFoundException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public Vector<User> receiveUsers(){
         try {
             return (Vector<User>) input_stream.readObject();
@@ -141,6 +147,15 @@ public class OwnClient {
     public Vector<Review> receiveReviews() {
         try {
             return (Vector<Review>) input_stream.readObject();
+        }catch (IOException |ClassNotFoundException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Vector<Purchase> receivePurchases() {
+        try {
+            return (Vector<Purchase>) input_stream.readObject();
         }catch (IOException |ClassNotFoundException e){
             e.printStackTrace();
         }
