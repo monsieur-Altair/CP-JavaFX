@@ -10,15 +10,18 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import static com.gui.Constants.DARK_THEME_PATH;
-import static com.gui.Constants.LIGHT_THEME_PATH;
+import static com.gui.Constants.*;
 
 public class UserManufacturerController extends UserMenuController{
 
     private ObservableList<Manufacturer> list, selectableManufacturerList;
     boolean isHaveMark;
+
     @FXML
     private Button addMarkButton;
+
+    @FXML
+    private Button pieChartButton;
 
     @FXML
     private TextField markField;
@@ -89,6 +92,8 @@ public class UserManufacturerController extends UserMenuController{
                     }
                 }
         );
+
+        pieChartButton.setOnMouseClicked(event -> {switchScene(event,PIE_CHART_FXML); });
 
         addMarkButton.setOnMouseClicked(event -> {
             if(isHaveMark)

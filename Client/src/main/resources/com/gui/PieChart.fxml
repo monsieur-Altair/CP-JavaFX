@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="headerPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gui.controller.UserManufacturerController">
+<AnchorPane fx:id="headerPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gui.controller.PieChartController">
   <children>
     <AnchorPane fx:id="mainPane" layoutX="-1.0" layoutY="58.0" prefHeight="591.0" prefWidth="850.0" AnchorPane.topAnchor="58.0">
       <children>
@@ -59,29 +57,9 @@
                   <Insets top="20.0" />
                </padding>
             </VBox>
-            <TableView fx:id="manufacturerTable" layoutX="182.0" layoutY="72.0" prefHeight="414.0" prefWidth="628.0">
-              <columns>
-                <TableColumn fx:id="idColumn" prefWidth="73.60005187988281" text="Номер" />
-                <TableColumn fx:id="nameColumn" prefWidth="138.4000244140625" text="Название" />
-                  <TableColumn fx:id="countryColumn" minWidth="0.0" prefWidth="100.79998779296875" text="Страна" />
-                  <TableColumn fx:id="emailColumn" prefWidth="156.79998779296875" text="Почта" />
-                  <TableColumn fx:id="ratingColumn" minWidth="0.0" prefWidth="154.39999999999998" text="Рейтинг" />
-              </columns>
-            </TableView>
-            <TextField fx:id="manufacturerField" layoutX="182.0" layoutY="24.0" prefHeight="26.0" prefWidth="142.0" promptText="Производитель" />
-            <TextField fx:id="markField" layoutX="516.0" layoutY="24.0" prefHeight="26.0" prefWidth="90.0" promptText="Оценка" />
-            <Button fx:id="addMarkButton" layoutX="626.0" layoutY="20.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="183.0" text="Поставить оценку">
-               <font>
-                  <Font name="Euclid Math One Bold" size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="pieChartButton" layoutX="595.0" layoutY="502.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="214.0" text="Посмотреть график">
-               <font>
-                  <Font name="Euclid Math One Bold" size="18.0" />
-               </font>
-            </Button>
+            <PieChart fx:id="myPieChart" layoutX="229.0" layoutY="96.0" />
       </children></AnchorPane>
-    <Label fx:id="headLabel" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="35.0" prefWidth="822.0" text="Производители" textAlignment="CENTER" textFill="WHITE">
+    <Label fx:id="headLabel" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="35.0" prefWidth="822.0" text="Диаграмма количества товаров от производителей" textAlignment="CENTER" textFill="WHITE">
       <font>
         <Font name="Euclid Fraktur Bold" size="28.0" />
       </font>

@@ -20,6 +20,15 @@ d3d3d3 - more dark grey for left menu
     -fx-alignment: center-left;
 }
 
+.chart-pie-label-line {
+    -fx-stroke: black;
+    -fx-fill: black;
+}
+
+.chart-pie-label {
+    -fx-font-size: 2em;
+}
+
 .left{
     -fx-background-color: "#d3d3d3";
 }

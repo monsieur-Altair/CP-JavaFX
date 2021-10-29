@@ -98,6 +98,15 @@ public class OwnClient {
         return false;
     }
 
+    public Vector<InformationForPieChart> receiveDataForPieChart(){
+        try {
+            return (Vector<InformationForPieChart>)input_stream.readObject();
+        }catch (IOException |ClassNotFoundException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public String receiveFilePath(){
         try {
             return (String) input_stream.readObject();

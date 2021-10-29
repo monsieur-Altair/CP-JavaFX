@@ -121,6 +121,11 @@ public class ThreadForServer implements Runnable{
                         String filePath = sqlSelect3.execute(dbConnection.getMyConnection());
                         output_stream.writeObject(filePath);
                     }
+                    case "select data for pie chart"->{
+                        var sqlSelect3=new SelectDataForPieChart();
+                        Vector<InformationForPieChart> informationForPieCharts = sqlSelect3.execute(dbConnection.getMyConnection());
+                        output_stream.writeObject(informationForPieCharts);
+                    }
                 }
             }
             catch (IOException | ClassNotFoundException e) {
