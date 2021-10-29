@@ -135,7 +135,7 @@ public class UserBasketContoller extends UserMenuController{
         super.client.sendDataToServer("buy all products");
         super.client.sendDataToServer(super.client.getUserProfile().getId()+" "
                 +money+" "
-                +product_cost);
+                +(-1*product_cost));
 
         if(super.client.receiveResult()){
             deleteAllPurchase();
@@ -166,7 +166,7 @@ public class UserBasketContoller extends UserMenuController{
         super.client.sendDataToServer("buy one product");
         super.client.sendDataToServer(super.client.getUserProfile().getId()+" "
                 +money+" "
-                +product_cost);
+                +(-1*product_cost));
 
         if(super.client.receiveResult()){
             deleteOnePurchase();

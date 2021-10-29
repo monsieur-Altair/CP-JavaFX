@@ -79,7 +79,7 @@ public class UserMenuController {
         productButton.setOnMouseClicked(event -> {switchScene(event,USER_PRODUCTS_FXML);});
         manufacturerButton.setOnMouseClicked(event->{switchScene(event,USER_MANUFACTURER_FXML); });
         basketButton.setOnMouseClicked(event->{switchScene(event,USER_BASKET_FXML); });
-
+        profileButton.setOnMouseClicked(event -> {switchScene(event,USER_PROFILE_FXML);});
         closeButton.setOnMouseClicked(event->{
             client.sendDataToServer("exit");
             client.sendDataToServer(" ");

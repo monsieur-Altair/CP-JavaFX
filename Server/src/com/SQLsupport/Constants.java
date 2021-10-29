@@ -41,4 +41,8 @@ public class Constants {
     public static final String PURCHASE_USER="id_user";
     public static final String PURCHASE_PRODUCT="id_product";
 
+    public static final String FAQ_SCHEMA="faq";
+    public static final String FAQ_QUESTION="question";
+    public static final String FAQ_ANSWER="answer";
+
 }

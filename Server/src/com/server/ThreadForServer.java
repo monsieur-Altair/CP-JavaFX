@@ -55,10 +55,12 @@ public class ThreadForServer implements Runnable{
                     case "add review" -> sqlUpdate=new AddReview();
                     case "add mark to manufacturer" -> sqlUpdate=new AddMark();
                     case "add to basket" -> sqlUpdate=new AddToBasket();
-                    case "delete one purchase"->sqlUpdate=new DeleteOnePurchase();
-                    case "delete all purchases"->sqlUpdate=new DeleteAllPurchases();
-                    case "buy one product"->sqlUpdate=new BuyProduct();
-                    case "buy all products"->sqlUpdate=new BuyProduct();
+                    case "delete one purchase" -> sqlUpdate=new DeleteOnePurchase();
+                    case "delete all purchases" -> sqlUpdate=new DeleteAllPurchases();
+                    case "buy one product" -> sqlUpdate=new EditUserMoney();
+                    case "buy all products" -> sqlUpdate=new EditUserMoney();
+                    case "edit user" -> sqlUpdate=new EditUser();
+                    case "add money"->sqlUpdate=new EditUserMoney();
                     case "exit" -> {
                         try {
                             System.out.println("client №" + currentClient + " disconnected");
@@ -125,6 +127,11 @@ public class ThreadForServer implements Runnable{
                         var sqlSelect3=new SelectDataForPieChart();
                         Vector<InformationForPieChart> informationForPieCharts = sqlSelect3.execute(dbConnection.getMyConnection());
                         output_stream.writeObject(informationForPieCharts);
+                    }
+                    case "select all faq"->{
+                        var sqlSelect3=new SelectAllFAQ();
+                        Vector<Faq> faqs = sqlSelect3.executeSelect(dbConnection.getMyConnection());
+                        output_stream.writeObject(faqs);
                     }
                 }
             }

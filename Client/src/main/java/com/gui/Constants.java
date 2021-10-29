@@ -16,6 +16,9 @@ public class Constants {
     public static final String PRODUCTS_REVIEW_FXML="ProductsReview.fxml";
     public static final String USER_BASKET_FXML="UserBasket.fxml";
     public static final String PIE_CHART_FXML="PieChart.fxml";
+    public static final String USER_PROFILE_FXML="UserProfile.fxml";
+    public static final String USER_FAQ_FXML="UserFAQ.fxml";
+    public static final String USER_ADD_MONEY_FXML="UserAddMoney.fxml";
 
 
 }

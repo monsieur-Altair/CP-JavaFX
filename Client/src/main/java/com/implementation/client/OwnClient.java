@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -63,7 +62,6 @@ public class OwnClient {
     }
 
 
-
     public static OwnClient getInstance(){
         if(ownClient==null){
             ownClient=new OwnClient("127.0.0.1",2525);
@@ -72,9 +70,7 @@ public class OwnClient {
     }
 
     public void setUserProfile(User us){
-        if(user==null){
-            user=new User(us);
-        }
+        user=new User(us);
     }
 
     public User getUserProfile(){
@@ -165,6 +161,15 @@ public class OwnClient {
     public Vector<Purchase> receivePurchases() {
         try {
             return (Vector<Purchase>) input_stream.readObject();
+        }catch (IOException |ClassNotFoundException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Vector<Faq> receiveFAQ() {
+        try {
+            return (Vector<Faq>) input_stream.readObject();
         }catch (IOException |ClassNotFoundException e){
             e.printStackTrace();
         }
