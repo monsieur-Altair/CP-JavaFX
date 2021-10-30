@@ -26,14 +26,6 @@ public class MainMenuController {
     private Parent root;
     private Scene scene;
 
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private TableView<User> tableView;
-    private URL location;
-
     @FXML
     private AnchorPane headerPane;
 
@@ -52,7 +44,6 @@ public class MainMenuController {
     @FXML
     void initialize() {
         switchTheme(DARK_THEME_PATH);
-        tableView = new TableView<>();
     }
 
     public void switchTheme(String themePath){

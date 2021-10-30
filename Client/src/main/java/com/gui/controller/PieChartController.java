@@ -21,13 +21,9 @@ public class PieChartController extends UserMenuController{
 
     @FXML
     public void initialize(){
-        client = OwnClient.getInstance();
         dataList= FXCollections.observableArrayList();
 
         super.initMainScene();
-
-        String path=!client.isDarkTheme()?LIGHT_THEME_PATH:DARK_THEME_PATH;
-        switchTheme(path);
 
         client.sendDataToServer("select data for pie chart");
         client.sendDataToServer(" ");

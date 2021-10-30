@@ -76,14 +76,12 @@ public class UserProfileController extends UserMenuController{
     @FXML
     void initialize() {
         isEdit=false;
-        client = OwnClient.getInstance();
 
-        String path=!client.isDarkTheme()?LIGHT_THEME_PATH:DARK_THEME_PATH;
-        switchTheme(path);
+
+        this.initMainScene();
 
         this.initFields();
         this.addActions();
-        this.initMainScene();
 
     }
 

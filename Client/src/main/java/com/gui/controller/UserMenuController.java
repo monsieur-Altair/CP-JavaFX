@@ -64,14 +64,8 @@ public class UserMenuController {
 
     @FXML
     void initialize() {
-        client = OwnClient.getInstance();
-
-        String path=!client.isDarkTheme()?LIGHT_THEME_PATH:DARK_THEME_PATH;
-        switchTheme(path);
-
-        headLabel.setText("Добро пожаловать, "+client.getUserProfile().getLogin()+"!");
-
         initMainScene();
+        headLabel.setText("Добро пожаловать, "+client.getUserProfile().getLogin()+"!");
     }
 
     public void initMainScene(){

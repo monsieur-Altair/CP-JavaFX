@@ -37,12 +37,6 @@ public class RegistrationController {
     private OwnClient client;
 
     @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
-
-    @FXML
     private TextField addressField;
 
     @FXML

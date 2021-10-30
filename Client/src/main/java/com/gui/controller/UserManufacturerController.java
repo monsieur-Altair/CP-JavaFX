@@ -49,13 +49,9 @@ public class UserManufacturerController extends UserMenuController{
 
     @FXML
     void initialize() {
-        super.client = OwnClient.getInstance();
-        isHaveMark=false;
-        String path=!super.client.isDarkTheme()?LIGHT_THEME_PATH:DARK_THEME_PATH;
-        switchTheme(path);
 
-        list= FXCollections.observableArrayList();
-        selectableManufacturerList=FXCollections.observableArrayList();
+        this.initMainScene();
+        isHaveMark=false;
 
         idColumn.setCellValueFactory(new PropertyValueFactory<Manufacturer,Integer>("id_manufacturer"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<Manufacturer,String>("name"));
@@ -66,7 +62,6 @@ public class UserManufacturerController extends UserMenuController{
 
         SelectAllManufacturers();
 
-        this.initMainScene();
     }
 
     public void SelectAllManufacturers(){
@@ -81,6 +76,9 @@ public class UserManufacturerController extends UserMenuController{
     public void initMainScene(){
 
         super.initMainScene();
+
+        list= FXCollections.observableArrayList();
+        selectableManufacturerList=FXCollections.observableArrayList();
 
         manufacturerTable.getSelectionModel().selectedItemProperty().addListener(
                 (obs,oldSelection,newSelection)->{
@@ -98,8 +96,12 @@ public class UserManufacturerController extends UserMenuController{
         addMarkButton.setOnMouseClicked(event -> {
             if(isHaveMark)
                return;
-
-            int mark=Integer.parseInt(markField.getText());
+            int mark=0;
+            try {
+                mark=Integer.parseInt(markField.getText());
+            }catch (NumberFormatException e){
+                System.out.println(e.getMessage());
+            }
             if(mark>10||mark<0){
                 markField.setText("Некорректно");
                 return;

@@ -59,10 +59,6 @@ public class UserProductsController extends UserMenuController{
 
     @FXML
     void initialize(){
-        /*super.client = OwnClient.getInstance();
-
-        String path=!super.client.isDarkTheme()?LIGHT_THEME_PATH:DARK_THEME_PATH;
-        super.switchTheme(path);*/
 
         dataFromServer = FXCollections.observableArrayList();
         selectableProductList = FXCollections.observableArrayList();
@@ -72,6 +68,7 @@ public class UserProductsController extends UserMenuController{
         costColumn.setCellValueFactory(new PropertyValueFactory<>("cost"));
         countColumn.setCellValueFactory(new PropertyValueFactory<>("count"));
         manufacturerColumn.setCellValueFactory(new PropertyValueFactory<>("nameManufacturer"));
+
         this.initMainScene();
 
         this.selectAllProducts();

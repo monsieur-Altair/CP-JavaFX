@@ -30,10 +30,6 @@ public class UserFAQController extends UserMenuController{
 
     @FXML
     public void initialize(){
-        client = OwnClient.getInstance();
-
-        String path=!client.isDarkTheme()?LIGHT_THEME_PATH:DARK_THEME_PATH;
-        switchTheme(path);
 
         this.initMainScene();
         dataFromServer= FXCollections.observableArrayList();

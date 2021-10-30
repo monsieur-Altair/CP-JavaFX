@@ -80,13 +80,9 @@ public class UserBasketContoller extends UserMenuController{
 
     @FXML
     void initialize(){
-        super.client = OwnClient.getInstance();
 
-        String path=!super.client.isDarkTheme()?LIGHT_THEME_PATH:DARK_THEME_PATH;
-        super.switchTheme(path);
+        this.initMainScene();
 
-        dataAboutPurchases = FXCollections.observableArrayList();
-        selectablePurchasesList = FXCollections.observableArrayList();
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id_purchase"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("product_name"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("product_type"));
@@ -106,7 +102,6 @@ public class UserBasketContoller extends UserMenuController{
         oneCostLabel.setText("Выбран товар на сумму:\t\t\t\t0");
         messageLabel.setText(" ");
 
-        this.initMainScene();
     }
 
     private void deleteOneRebate(int id_rebate){
@@ -137,6 +132,9 @@ public class UserBasketContoller extends UserMenuController{
 
     public void initMainScene(){
         super.initMainScene();
+
+        dataAboutPurchases = FXCollections.observableArrayList();
+        selectablePurchasesList = FXCollections.observableArrayList();
 
         deleteButton.setOnMouseClicked(event -> {deleteOnePurchase();});
         buyOneButton.setOnMouseClicked(event -> {buyOneProduct();});

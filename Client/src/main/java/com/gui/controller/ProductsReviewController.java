@@ -34,15 +34,13 @@ public class ProductsReviewController extends UserMenuController{
 
     @FXML
     public void initialize(){
+        this.initMainScene();
+
         isHaveReview=false;
-        super.client = OwnClient.getInstance();
 
         productName=super.client.getSelectableProductForReview().getName();
         super.headLabel.setText("Отзыв по товару: "+productName);
 
-
-        String path=!super.client.isDarkTheme()?LIGHT_THEME_PATH:DARK_THEME_PATH;
-        super.switchTheme(path);
 
         dataFromServer = FXCollections.observableArrayList();
         selectableReviewList = FXCollections.observableArrayList();
@@ -51,7 +49,6 @@ public class ProductsReviewController extends UserMenuController{
 
         selectAllReviews();
 
-        this.initMainScene();
     }
 
 
