@@ -14,7 +14,7 @@ public class DBConnection {
         {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection=DriverManager.getConnection("jdbc:mysql://localhost/db7", "root", "583M6259vn328");
-            System.out.println("Connection succesfull!");
+            System.out.println("Connection to database is succesfull!");
         }
         catch (SQLException | ClassNotFoundException e)
         {
@@ -30,7 +30,7 @@ public class DBConnection {
         return connection;
     }
 
-    public void close(ResultSet rs)
+/*    public void close(ResultSet rs)
     {
         if(rs !=null)
         {
@@ -52,7 +52,7 @@ public class DBConnection {
             }
             catch(Exception e){}
         }
-    }
+    }*/
 
     public void destroy()
     {

@@ -3,3 +3,4 @@ demo/
 *.png
 *.jar
 *.log
+file-*.txt

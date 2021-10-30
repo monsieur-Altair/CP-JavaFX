@@ -1,25 +1,37 @@
 package com.server;
 
+import com.SQLsupport.DBClass.*;
+import com.SQLsupport.SelectableProduct;
+import com.SQLsupport.strategies.*;
+import com.SQLsupport.DBConnection;
+import com.SQLsupport.Updatable;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
+import java.util.Vector;
 
 public class ThreadForServer implements Runnable{
     private Socket client;
     private ObjectInputStream input_stream;
     private ObjectOutputStream output_stream;
-    private static int clientCount=0;
+    private static int allClientCount = 0;
+    private int currentClient;
+    private DBConnection dbConnection;
 
-    public ThreadForServer(ServerSocket serverSocket){
+    public ThreadForServer(ServerSocket serverSocket, DBConnection dbConnection){
 
         try {
             client=serverSocket.accept();
-            clientCount++;
-            System.out.println("client "+clientCount+" is connected");
+            allClientCount++;
+            currentClient=allClientCount;
+            System.out.println("client №" +currentClient+" connected");
             input_stream = new ObjectInputStream(client.getInputStream());
             output_stream = new ObjectOutputStream(client.getOutputStream());
+            this.dbConnection=dbConnection;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -31,22 +43,123 @@ public class ThreadForServer implements Runnable{
         client.close();
     }
 
+    private void closeThread(){
+        try {
+            System.out.println("client №" + currentClient + " disconnected");
+            allClientCount--;
+            this.Release();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     @Override
     public void run() {
-        /*try {
-            int size = (int) input_stream.readObject();
-            int min = 0;
-            int max = size;
-            System.out.println("~client: " + size);
-            int[] array = new int[size];
-            for (int i = 0; i < size; i++)
-                array[i] = (int) (min + (Math.random() * (max - min)));
-            Thread.sleep(1500);
-            output_stream.writeObject(array);
-            this.Release();
-        } catch (IOException | ClassNotFoundException | InterruptedException e) {
-            System.out.println(e);
-            e.printStackTrace();
-        }*/
+        while(true){
+            try{
+                if(!client.isConnected()||client.isClosed()) {
+                    System.out.println("looooooooooooooooooooooool");
+                }
+                String clientChoice=(String)input_stream.readObject();
+                String dataFromClient=(String)input_stream.readObject();
+
+                Updatable sqlUpdate=null;
+                switch (clientChoice) {
+                    case "registration" -> sqlUpdate = new AddUser();
+                    case "add review" -> sqlUpdate=new AddReview();
+                    case "add mark to manufacturer" -> sqlUpdate=new AddMark();
+                    case "add to basket" -> sqlUpdate=new AddToBasket();
+                    case "delete one purchase" -> sqlUpdate=new DeleteOnePurchase();
+                    case "delete all purchases" -> sqlUpdate=new DeleteAllPurchases();
+                    case "buy one product" -> sqlUpdate=new EditUserMoney();
+                    case "buy all products" -> sqlUpdate=new EditUserMoney();
+                    case "edit user" -> sqlUpdate=new EditUser();
+                    case "add money"->sqlUpdate=new EditUserMoney();
+                    case "delete one rebate"->sqlUpdate=new DeleteOneRebate();
+                    case "exit" -> {
+                        closeThread();
+                        return;
+                    }
+                }
+                if(sqlUpdate!=null){
+                    sqlUpdate.getData(dataFromClient);
+                    boolean res = sqlUpdate.executeUpdate(dbConnection.getMyConnection());
+                    output_stream.writeObject(res);
+                }
+
+                //all selects of products
+                SelectableProduct sqlSelectProduct=null;
+                switch (clientChoice) {
+                    case "select all products" -> sqlSelectProduct = new SelectAllProducts();
+                    case "select one product" -> sqlSelectProduct = new SelectOneProduct();
+                    case "select by manufacturer" -> sqlSelectProduct = new SelectProductsByManufacturer();
+                }
+                if(sqlSelectProduct!=null){
+                    sqlSelectProduct.getData(dataFromClient);
+                    Vector<Product> product = sqlSelectProduct.executeSelect(dbConnection.getMyConnection());
+                    output_stream.writeObject(product);
+                }
+
+
+                //check all select requests
+                switch (clientChoice) {
+                    case "signIn" -> {
+                        var sqlSelect = new SelectUser();
+                        sqlSelect.getData(dataFromClient);
+                        Vector<User> user = sqlSelect.executeSelect(dbConnection.getMyConnection());
+                        output_stream.writeObject(user);
+                    }
+                    case "select all manufacturer" -> {
+                        var sqlSelect1 = new SelectAllManufacturers();
+                        Vector<Manufacturer> manufacturers = sqlSelect1.executeSelect(dbConnection.getMyConnection());
+                        output_stream.writeObject(manufacturers);
+                    }
+                    case "select all reviews" ->{
+                        var sqlSelect2=new SelectReviewsForProduct();
+                        sqlSelect2.getData(dataFromClient);
+                        Vector<Review> reviews = sqlSelect2.executeSelect(dbConnection.getMyConnection());
+                        output_stream.writeObject(reviews);
+                    }
+                    case "select all purchases"->{
+                        var sqlSelect3=new SelectAllPurchases();
+                        sqlSelect3.getData(dataFromClient);
+                        Vector<Purchase> purchases = sqlSelect3.executeSelect(dbConnection.getMyConnection());
+                        output_stream.writeObject(purchases);
+                    }
+                    case "print basket"->{
+                        var sqlSelect3=new PrintBasket();
+                        sqlSelect3.getData(dataFromClient);
+                        String filePath = sqlSelect3.execute(dbConnection.getMyConnection());
+                        output_stream.writeObject(filePath);
+                    }
+                    case "select data for pie chart"->{
+                        var sqlSelect3=new SelectDataForPieChart();
+                        Vector<InformationForPieChart> informationForPieCharts = sqlSelect3.execute(dbConnection.getMyConnection());
+                        output_stream.writeObject(informationForPieCharts);
+                    }
+                    case "select all faq"->{
+                        var sqlSelect3=new SelectAllFAQ();
+                        Vector<Faq> faqs = sqlSelect3.executeSelect(dbConnection.getMyConnection());
+                        output_stream.writeObject(faqs);
+                    }
+                    case "select all rebates"->{
+                        var sqlSelect3=new SelectAllRebates();
+                        sqlSelect3.getData(dataFromClient);
+                        Vector<Rebate> rebates = sqlSelect3.executeSelect(dbConnection.getMyConnection());
+                        output_stream.writeObject(rebates);
+                    }
+                }
+            }
+            catch ( SocketException e) {
+                System.out.println("client №"+currentClient+" break connection");
+                closeThread();
+                return;
+            }
+            catch (IOException | ClassNotFoundException  e){
+                e.printStackTrace();
+            }
+
+        }
     }
 }
