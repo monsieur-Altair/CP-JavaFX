@@ -71,10 +71,15 @@ public class UserMenuController {
 
         headLabel.setText("Добро пожаловать, "+client.getUserProfile().getLogin()+"!");
 
-        initMainButtons();
+        initMainScene();
     }
 
-    public void initMainButtons(){
+    public void initMainScene(){
+
+        client = OwnClient.getInstance();
+
+        String path=!client.isDarkTheme()?LIGHT_THEME_PATH:DARK_THEME_PATH;
+        switchTheme(path);
 
         productButton.setOnMouseClicked(event -> {switchScene(event,USER_PRODUCTS_FXML);});
         manufacturerButton.setOnMouseClicked(event->{switchScene(event,USER_MANUFACTURER_FXML); });

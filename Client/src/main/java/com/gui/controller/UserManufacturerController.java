@@ -66,7 +66,7 @@ public class UserManufacturerController extends UserMenuController{
 
         SelectAllManufacturers();
 
-        this.initMainButtons();
+        this.initMainScene();
     }
 
     public void SelectAllManufacturers(){
@@ -78,9 +78,9 @@ public class UserManufacturerController extends UserMenuController{
         manufacturerTable.setItems(list);
     }
 
-    public void initMainButtons(){
+    public void initMainScene(){
 
-        super.initMainButtons();
+        super.initMainScene();
 
         manufacturerTable.getSelectionModel().selectedItemProperty().addListener(
                 (obs,oldSelection,newSelection)->{

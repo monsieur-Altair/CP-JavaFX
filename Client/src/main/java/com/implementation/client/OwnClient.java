@@ -21,6 +21,7 @@ public class OwnClient {
     private User user=null;
     private boolean isRussianLanguage;
     private boolean isDarkTheme;
+    private Vector<Rebate> clientsRebates;
 
     public boolean isRussianLanguage() {
         return isRussianLanguage;
@@ -39,6 +40,7 @@ public class OwnClient {
             selectableProductForReview=null;
             isDarkTheme=true;
             isRussianLanguage=true;
+            clientsRebates=new Vector<>();
             System.out.println("connection established...");
         }catch (IOException e){
             e.printStackTrace();
@@ -75,6 +77,10 @@ public class OwnClient {
 
     public User getUserProfile(){
         return user;
+    }
+
+    public Vector<Rebate> getClientsRebates() {
+        return clientsRebates;
     }
 
     public void sendDataToServer(String data){
@@ -170,6 +176,15 @@ public class OwnClient {
     public Vector<Faq> receiveFAQ() {
         try {
             return (Vector<Faq>) input_stream.readObject();
+        }catch (IOException |ClassNotFoundException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Vector<Rebate> receiveRebates() {
+        try {
+            return (Vector<Rebate>) input_stream.readObject();
         }catch (IOException |ClassNotFoundException e){
             e.printStackTrace();
         }

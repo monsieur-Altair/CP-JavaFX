@@ -45,4 +45,10 @@ public class Constants {
     public static final String FAQ_QUESTION="question";
     public static final String FAQ_ANSWER="answer";
 
+    public static final String REBATE_SCHEMA="rebate";
+    public static final String REBATE_ID="id_rebate";
+    public static final String REBATE_USER="id_user";
+    public static final String REBATE_PERCENT="percent";
+    public static final String REBATE_MANUFACTURER="id_manufacturer";
+
 }

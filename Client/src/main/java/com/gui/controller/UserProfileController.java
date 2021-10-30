@@ -1,7 +1,5 @@
 package com.gui.controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import java.util.Vector;
 
 import com.SQLsupport.DBClass.User;
@@ -10,8 +8,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 
 import static com.gui.Constants.*;
 
@@ -87,7 +83,7 @@ public class UserProfileController extends UserMenuController{
 
         this.initFields();
         this.addActions();
-        this.initMainButtons();
+        this.initMainScene();
 
     }
 
@@ -135,8 +131,8 @@ public class UserProfileController extends UserMenuController{
     }
 
     @Override
-    public void initMainButtons(){
-        super.initMainButtons();
+    public void initMainScene(){
+        super.initMainScene();
         changeProfileButton.setOnMouseClicked(event -> {editProfile();});
         faqButton.setOnMouseClicked(event -> {switchScene(event,USER_FAQ_FXML);});
         addMoneyButton.setOnMouseClicked(event -> {switchScene(event,USER_ADD_MONEY_FXML);});

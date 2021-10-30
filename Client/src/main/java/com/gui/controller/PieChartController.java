@@ -24,7 +24,7 @@ public class PieChartController extends UserMenuController{
         client = OwnClient.getInstance();
         dataList= FXCollections.observableArrayList();
 
-        super.initMainButtons();
+        super.initMainScene();
 
         String path=!client.isDarkTheme()?LIGHT_THEME_PATH:DARK_THEME_PATH;
         switchTheme(path);

@@ -1,6 +1,5 @@
 package com.gui.controller;
 
-import com.SQLsupport.DBClass.Product;
 import com.SQLsupport.DBClass.Review;
 import com.implementation.client.OwnClient;
 import javafx.collections.FXCollections;
@@ -52,7 +51,7 @@ public class ProductsReviewController extends UserMenuController{
 
         selectAllReviews();
 
-        this.initMainButtons();
+        this.initMainScene();
     }
 
 
@@ -72,9 +71,9 @@ public class ProductsReviewController extends UserMenuController{
     }
 
     @Override
-    public void initMainButtons(){
+    public void initMainScene(){
 
-        super.initMainButtons();
+        super.initMainScene();
 
         reviewButton.setOnMouseClicked(event -> {
             if(!isHaveReview) {

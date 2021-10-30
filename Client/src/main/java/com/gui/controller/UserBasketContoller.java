@@ -1,6 +1,7 @@
 package com.gui.controller;
 
 import com.SQLsupport.DBClass.Purchase;
+import com.SQLsupport.DBClass.Rebate;
 import com.implementation.client.OwnClient;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,7 +18,8 @@ import static com.gui.Constants.LIGHT_THEME_PATH;
 
 public class UserBasketContoller extends UserMenuController{
 
-    private ObservableList<Purchase> dataFromServer, selectablePurchasesList;
+    private ObservableList<Purchase> dataAboutPurchases, selectablePurchasesList;
+    private ObservableList<Rebate> dataAboutRebates, selectableRebatesList;
 
     @FXML
     private Label allCostLabel;
@@ -38,13 +40,22 @@ public class UserBasketContoller extends UserMenuController{
     private Button deleteButton;
 
     @FXML
+    private Button useRebateButton;
+
+    @FXML
     private Button printButton;
 
     @FXML
     private Label oneCostLabel;
 
-/*    @FXML
-    private Button searchButton;*/
+    @FXML
+    private TableColumn<Rebate, String> rebateManufColumn;
+
+    @FXML
+    private TableColumn<Rebate, Integer> rebatePercentColumn;
+
+    @FXML
+    private TableView<Rebate> rebateTable;
 
     @FXML
     private TextField searchField;
@@ -74,39 +85,64 @@ public class UserBasketContoller extends UserMenuController{
         String path=!super.client.isDarkTheme()?LIGHT_THEME_PATH:DARK_THEME_PATH;
         super.switchTheme(path);
 
-        dataFromServer = FXCollections.observableArrayList();
+        dataAboutPurchases = FXCollections.observableArrayList();
         selectablePurchasesList = FXCollections.observableArrayList();
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id_purchase"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("product_name"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("product_type"));
         costColumn.setCellValueFactory(new PropertyValueFactory<>("product_cost"));
         manufacturerColumn.setCellValueFactory(new PropertyValueFactory<>("manufacturer_name"));
-
         this.selectAllProductsFromBasket();
+
+        dataAboutRebates=FXCollections.observableArrayList();
+        selectableRebatesList=FXCollections.observableArrayList();
+        rebateManufColumn.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
+        rebatePercentColumn.setCellValueFactory(new PropertyValueFactory<>("percent"));
+        this.selectAllRebates();
+
 
         currentAccountLabel.setText("Ваш текущий счет:\t\t\t\t\t"+client.getUserProfile().getMoney());
         allCostLabel.setText("Всего в корзине товаров на сумму:\t"+calculateSumInBasket());
         oneCostLabel.setText("Выбран товар на сумму:\t\t\t\t0");
         messageLabel.setText(" ");
 
-        this.initMainButtons();
+        this.initMainScene();
     }
 
+    private void deleteOneRebate(int id_rebate){
+        super.client.sendDataToServer("delete one rebate");
+        super.client.sendDataToServer(Integer.toString(id_rebate));
+        if(client.receiveResult())
+            selectAllRebates();
+    }
+
+    private void selectAllRebates() {
+        super.client.sendDataToServer("select all rebates");
+        super.client.sendDataToServer(Integer.toString(super.client.getUserProfile().getId()));
+        this.updateRebatesTable();
+    }
+
+    private void updateRebatesTable() {
+        dataAboutRebates.clear();
+        dataAboutRebates.addAll(super.client.receiveRebates());
+        rebateTable.setItems(dataAboutRebates);
+    }
 
 
     public void selectAllProductsFromBasket(){
         super.client.sendDataToServer("select all purchases");
         super.client.sendDataToServer(Integer.toString(super.client.getUserProfile().getId()));
-        this.updateTable();
+        this.updatePurchasesTable();
     }
 
-    public void initMainButtons(){
-        super.initMainButtons();
+    public void initMainScene(){
+        super.initMainScene();
 
         deleteButton.setOnMouseClicked(event -> {deleteOnePurchase();});
         buyOneButton.setOnMouseClicked(event -> {buyOneProduct();});
         buyAllButton.setOnMouseClicked(event -> {buyAllProducts();});
         printButton.setOnMouseClicked( event -> {printBasket();});
+        useRebateButton.setOnMouseClicked(event -> {activateRebate();});
 
         purchaseTable.getSelectionModel().selectedItemProperty().addListener(
                 (obs,oldSelection,newSelection)->{
@@ -120,6 +156,21 @@ public class UserBasketContoller extends UserMenuController{
                     }
                 }
         );
+    }
+
+    private void activateRebate() {
+        selectableRebatesList.clear();
+        selectableRebatesList.add(rebateTable.getSelectionModel().getSelectedItem());
+        if (selectableRebatesList.size()==0)
+            return;
+        Rebate rebate = selectableRebatesList.get(0);
+        client.getClientsRebates().add(rebate);
+        int id_rebate=rebate.getId();
+        checkAllCosts();
+        deleteOneRebate(id_rebate);
+
+        purchaseTable.refresh();
+        allCostLabel.setText("Всего в корзине товаров на сумму:\t"+calculateSumInBasket());
     }
 
     private void printBasket() {
@@ -194,17 +245,31 @@ public class UserBasketContoller extends UserMenuController{
 
     private int calculateSumInBasket() {
         int sum=0;
-        if(dataFromServer.size()>0)
-            for(Purchase purchase: dataFromServer)
+        if(dataAboutPurchases.size()>0)
+            for(Purchase purchase: dataAboutPurchases)
                 sum+=purchase.getProduct_cost();
         return sum;
     }
 
-    public void updateTable(){
-        dataFromServer.clear();
-        dataFromServer.addAll(super.client.receivePurchases());
-        purchaseTable.setItems(dataFromServer);
+    public void updatePurchasesTable(){
+        dataAboutPurchases.clear();
+        var purchases=super.client.receivePurchases();
+        dataAboutPurchases.addAll(purchases);
+        checkAllCosts();
+        purchaseTable.setItems(dataAboutPurchases);
         searchField.setText("");
         oneCostLabel.setText("Выбран товар на сумму:\t\t\t\t0");
     }
+
+    private void checkAllCosts(){
+        for(var purchase:dataAboutPurchases)
+            for(var reb:client.getClientsRebates())
+                if (purchase.getManufacturer_name().equals(reb.getManufacturer())) {
+                    double new_cost=purchase.getProduct_cost() * (1 - reb.getPercent() / 100.0);
+                    purchase.setProduct_cost((int)(new_cost));
+                }
+
+    }
 }
+
+

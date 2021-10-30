@@ -26,6 +26,10 @@ public class Purchase implements Serializable {
         }
     }
 
+    public void printConsole(){
+        System.out.println("\nman="+manufacturer_name+"\ncost="+product_cost);
+    }
+
     public int getId_purchase() {
         return id_purchase;
     }
@@ -44,5 +48,9 @@ public class Purchase implements Serializable {
 
     public String getManufacturer_name() {
         return manufacturer_name;
+    }
+
+    public void setProduct_cost(int product_cost) {
+        this.product_cost = product_cost;
     }
 }

@@ -1,7 +1,6 @@
 package com.gui.controller;
 
 import com.SQLsupport.DBClass.Faq;
-import com.SQLsupport.DBClass.Product;
 import com.implementation.client.OwnClient;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,7 +35,7 @@ public class UserFAQController extends UserMenuController{
         String path=!client.isDarkTheme()?LIGHT_THEME_PATH:DARK_THEME_PATH;
         switchTheme(path);
 
-        this.initMainButtons();
+        this.initMainScene();
         dataFromServer= FXCollections.observableArrayList();
 
         questionColumn.setCellValueFactory(new PropertyValueFactory<>("question"));
@@ -50,8 +49,8 @@ public class UserFAQController extends UserMenuController{
     }
 
     @Override
-    public void initMainButtons(){
-        super.initMainButtons();
+    public void initMainScene(){
+        super.initMainScene();
         backButton.setOnMouseClicked(event -> {super.switchScene(event,USER_PROFILE_FXML);});
     }
 

@@ -1,8 +1,6 @@
 package com.gui.controller;
 
 import com.SQLsupport.DBClass.Product;
-import com.gui.MainMenuGUI;
-import com.implementation.client.OwnClient;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -61,10 +59,10 @@ public class UserProductsController extends UserMenuController{
 
     @FXML
     void initialize(){
-        super.client = OwnClient.getInstance();
+        /*super.client = OwnClient.getInstance();
 
         String path=!super.client.isDarkTheme()?LIGHT_THEME_PATH:DARK_THEME_PATH;
-        super.switchTheme(path);
+        super.switchTheme(path);*/
 
         dataFromServer = FXCollections.observableArrayList();
         selectableProductList = FXCollections.observableArrayList();
@@ -74,9 +72,9 @@ public class UserProductsController extends UserMenuController{
         costColumn.setCellValueFactory(new PropertyValueFactory<>("cost"));
         countColumn.setCellValueFactory(new PropertyValueFactory<>("count"));
         manufacturerColumn.setCellValueFactory(new PropertyValueFactory<>("nameManufacturer"));
+        this.initMainScene();
 
         this.selectAllProducts();
-        this.initMainButtons();
     }
 
     public void selectAllProducts(){
@@ -112,9 +110,9 @@ public class UserProductsController extends UserMenuController{
     }
 
     @Override
-    public void initMainButtons(){
+    public void initMainScene(){
 
-        super.initMainButtons();
+        super.initMainScene();
 
         messageLabel.setText(" ");
 

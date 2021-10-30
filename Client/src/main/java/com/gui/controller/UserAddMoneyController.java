@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import org.w3c.dom.Text;
 
 import static com.gui.Constants.*;
 
@@ -65,12 +64,12 @@ public class UserAddMoneyController extends UserMenuController{
         switchTheme(path);
         messageLabel.setText(" ");
 
-        this.initMainButtons();
+        this.initMainScene();
     }
 
     @Override
-    public void initMainButtons(){
-        super.initMainButtons();
+    public void initMainScene(){
+        super.initMainScene();
         backButton.setOnMouseClicked(event -> {switchScene(event,USER_PROFILE_FXML);});
         addMoneyButton.setOnMouseClicked(event -> {addMoney();});
         super.mainPane.setOnMouseClicked(event -> {messageLabel.setText("");});

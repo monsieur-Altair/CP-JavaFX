@@ -59,7 +59,7 @@
                   <Insets top="20.0" />
                </padding>
             </VBox>
-            <TableView fx:id="purchaseTable" layoutX="181.0" layoutY="141.0" prefHeight="274.0" prefWidth="631.0">
+            <TableView fx:id="purchaseTable" layoutX="181.0" layoutY="141.0" prefHeight="177.0" prefWidth="631.0">
               <columns>
                 <TableColumn fx:id="idColumn" prefWidth="70.4000244140625" text="Номер" />
                 <TableColumn fx:id="nameColumn" prefWidth="168.79998779296875" text="Название" />
@@ -78,7 +78,7 @@
                   <Font name="Euclid Math One Bold" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="buyAllButton" layoutX="657.0" layoutY="431.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="154.0" text="Купить всё">
+            <Button fx:id="buyAllButton" layoutX="657.0" layoutY="373.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="154.0" text="Купить всё">
                <font>
                   <Font name="Euclid Math One Bold" size="18.0" />
                </font>
@@ -96,7 +96,18 @@
                </children>
             </VBox>
             <Label fx:id="messageLabel" layoutX="351.0" layoutY="20.0" prefHeight="35.0" prefWidth="154.0" text="для сообщений" />
-            <Button fx:id="printButton" layoutX="181.0" layoutY="431.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="210.0" text="Распечатать корзину ">
+            <Button fx:id="printButton" layoutX="600.0" layoutY="327.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="210.0" text="Распечатать корзину ">
+               <font>
+                  <Font name="Euclid Math One Bold" size="18.0" />
+               </font>
+            </Button>
+            <TableView fx:id="rebateTable" layoutX="181.0" layoutY="373.0" prefHeight="178.0" prefWidth="247.0">
+               <columns>
+                  <TableColumn fx:id="rebateManufColumn" prefWidth="142.39996337890625" text="Производитель" />
+                  <TableColumn fx:id="rebatePercentColumn" prefWidth="101.60003662109375" text="Процент" />
+               </columns>
+            </TableView>
+            <Button fx:id="useRebateButton" layoutX="437.0" layoutY="515.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="210.0" text="Использовать скидку">
                <font>
                   <Font name="Euclid Math One Bold" size="18.0" />
                </font>

@@ -11,6 +11,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.Vector;
 
 public class ThreadForServer implements Runnable{
@@ -42,10 +43,24 @@ public class ThreadForServer implements Runnable{
         client.close();
     }
 
+    private void closeThread(){
+        try {
+            System.out.println("client №" + currentClient + " disconnected");
+            allClientCount--;
+            this.Release();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     @Override
     public void run() {
         while(true){
             try{
+                if(!client.isConnected()||client.isClosed()) {
+                    System.out.println("looooooooooooooooooooooool");
+                }
                 String clientChoice=(String)input_stream.readObject();
                 String dataFromClient=(String)input_stream.readObject();
 
@@ -61,14 +76,9 @@ public class ThreadForServer implements Runnable{
                     case "buy all products" -> sqlUpdate=new EditUserMoney();
                     case "edit user" -> sqlUpdate=new EditUser();
                     case "add money"->sqlUpdate=new EditUserMoney();
+                    case "delete one rebate"->sqlUpdate=new DeleteOneRebate();
                     case "exit" -> {
-                        try {
-                            System.out.println("client №" + currentClient + " disconnected");
-                            allClientCount--;
-                            this.Release();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        closeThread();
                         return;
                     }
                 }
@@ -133,9 +143,20 @@ public class ThreadForServer implements Runnable{
                         Vector<Faq> faqs = sqlSelect3.executeSelect(dbConnection.getMyConnection());
                         output_stream.writeObject(faqs);
                     }
+                    case "select all rebates"->{
+                        var sqlSelect3=new SelectAllRebates();
+                        sqlSelect3.getData(dataFromClient);
+                        Vector<Rebate> rebates = sqlSelect3.executeSelect(dbConnection.getMyConnection());
+                        output_stream.writeObject(rebates);
+                    }
                 }
             }
-            catch (IOException | ClassNotFoundException e) {
+            catch ( SocketException e) {
+                System.out.println("client №"+currentClient+" break connection");
+                closeThread();
+                return;
+            }
+            catch (IOException | ClassNotFoundException  e){
                 e.printStackTrace();
             }
 
