@@ -11,6 +11,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import static com.gui.Constants.*;
+import static com.gui.LanguageSupport.*;
+import static com.gui.LanguageSupport.FAQ_BACK_TEXT;
 
 public class UserManufacturerController extends UserMenuController{
 
@@ -91,6 +93,12 @@ public class UserManufacturerController extends UserMenuController{
                 }
         );
 
+        languageButton.setOnMouseClicked(event -> {
+            int language_count1=client.isRussianLanguage()?LANGUAGE_ENGLISH:LANGUAGE_RUSSIAN;
+            this.switchLanguage(language_count1);
+            client.switchLanguage();
+        });
+
         pieChartButton.setOnMouseClicked(event -> {switchScene(event,PIE_CHART_FXML); });
 
         addMarkButton.setOnMouseClicked(event -> {
@@ -118,5 +126,18 @@ public class UserManufacturerController extends UserMenuController{
         });
     }
 
-
+    @Override
+    protected void switchLanguage(int language_count){
+        super.switchLanguage(language_count);
+        headLabel.setText(LABEL_MANUFACTURER_TEXT[language_count]);
+        idColumn.setText(MANUFACTURER_NUMBER_TEXT[language_count]);
+        nameColumn.setText(MANUFACTURER_NAME_TEXT[language_count]);
+        countryColumn.setText(MANUFACTURER_COUNTRY_TEXT[language_count]);
+        emailColumn.setText(MANUFACTURER_EMAIL_TEXT[language_count]);
+        ratingColumn.setText(MANUFACTURER_RATING_TEXT[language_count]);
+        markField.setPromptText(MANUFACTURER_MARK_TEXT[language_count]);
+        manufacturerField.setPromptText(MANUFACTURER_MANUF_TEXT[language_count]);
+        addMarkButton.setText(MANUFACTURER_ADD_MARK_TEXT[language_count]);
+        pieChartButton.setText(MANUFACTURER_CHART_TEXT[language_count]);
+    }
 }

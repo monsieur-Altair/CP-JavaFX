@@ -10,10 +10,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.util.Vector;
 
 import static com.gui.Constants.*;
+import static com.gui.LanguageSupport.*;
+import static com.gui.LanguageSupport.MANUFACTURER_CHART_TEXT;
 
 public class UserProductsController extends UserMenuController{
 
-    private ObservableList<Product> dataFromServer, selectableProductList;
+    private ObservableList<Product> dataFromServer, selectableProductList, comparisonList;
+    private String successfulAdd,successfulCompr;
 
     @FXML
     private TableColumn<Product, Integer> costColumn;
@@ -46,6 +49,9 @@ public class UserProductsController extends UserMenuController{
     private Button addToBasketButton;
 
     @FXML
+    private Button addToComparisonButton;
+
+    @FXML
     private Button reviewButton;
 
     @FXML
@@ -62,6 +68,7 @@ public class UserProductsController extends UserMenuController{
 
         dataFromServer = FXCollections.observableArrayList();
         selectableProductList = FXCollections.observableArrayList();
+        comparisonList =FXCollections.observableArrayList();
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id_product"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -134,8 +141,11 @@ public class UserProductsController extends UserMenuController{
 
         filterButton.setOnMouseClicked(event -> {selectProductByManufacturer();});
         reviewButton.setOnMouseClicked(event -> {
-            super.client.setSelectableProductForReview(selectableProductList.get(0));
-            super.switchScene(event,PRODUCTS_REVIEW_FXML);});
+            if(selectableProductList.size()!=0){
+                super.client.setSelectableProductForReview(selectableProductList.get(0));
+                super.switchScene(event,PRODUCTS_REVIEW_FXML);
+            }
+        });
 
         addToBasketButton.setOnMouseClicked(event -> {
             selectOneProduct();
@@ -146,11 +156,53 @@ public class UserProductsController extends UserMenuController{
                         products.elementAt(0).getId_product());
 
                 if(super.client.receiveResult()){
-                    messageLabel.setText("Товар добавлен");
+                    messageLabel.setText(successfulAdd);
                 }
             }
-
         });
+
+        addToComparisonButton.setOnMouseClicked(event -> {
+            if(selectableProductList.size()==0)
+                return;
+            if(comparisonList.size()<2){
+                comparisonList.add(selectableProductList.get(0));
+                messageLabel.setText(successfulCompr);
+            }
+            if(comparisonList.size()==2) {
+                dataFromServer.clear();
+                dataFromServer.addAll(comparisonList);
+                productsTable.setItems(dataFromServer);
+                comparisonList.clear();
+
+            }
+        });
+
+        languageButton.setOnMouseClicked(event -> {
+            int language_count1=client.isRussianLanguage()?LANGUAGE_ENGLISH:LANGUAGE_RUSSIAN;
+            this.switchLanguage(language_count1);
+            client.switchLanguage();
+        });
+    }
+
+    @Override
+    protected void switchLanguage(int language_count){
+        super.switchLanguage(language_count);
+        headLabel.setText(LABEL_PRODUCTS_TEXT[language_count]);
+        idColumn.setText(PRODUCTS_NUMBER_TEXT[language_count]);
+        nameColumn.setText(PRODUCTS_NAME_TEXT[language_count]);
+        typeColumn.setText(PRODUCTS_TYPE_TEXT[language_count]);
+        costColumn.setText(PRODUCTS_COST_TEXT[language_count]);
+        countColumn.setText(PRODUCTS_COUNT_TEXT[language_count]);
+        manufacturerColumn.setText(PRODUCTS_MANUF_TEXT[language_count]);
+        reviewButton.setText(PRODUCTS_REVIEW_TEXT[language_count]);
+        addToBasketButton.setText(PRODUCTS_BASKET_TEXT[language_count]);
+        searchButton.setText(PRODUCTS_SEARCH_TEXT[language_count]);
+        addToComparisonButton.setText(PRODUCTS_COMPARISON_TEXT[language_count]);
+        filterButton.setText(PRODUCTS_FILTER_TEXT[language_count]);
+        searchField.setPromptText(PRODUCTS_CHOOSE_PR_TEXT[language_count]);
+        filterField.setPromptText(PRODUCTS_CHOOSE_MANUF_TEXT[language_count]);
+        successfulAdd=PRODUCTS_ADD_SUCCESSFUL_TEXT[language_count];
+        successfulCompr=PRODUCTS_COMPARISON_SUCCESSFUL_TEXT[language_count];
     }
 
 }

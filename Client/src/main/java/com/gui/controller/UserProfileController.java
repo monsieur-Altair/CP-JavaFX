@@ -10,10 +10,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import static com.gui.Constants.*;
+import static com.gui.LanguageSupport.*;
 
 public class UserProfileController extends UserMenuController{
 
     private boolean isEdit;
+    private String admin,userStr;
 
     @FXML
     private Label addressLabel;
@@ -92,16 +94,6 @@ public class UserProfileController extends UserMenuController{
         lastNameField.setOnMouseClicked(event -> {isEdit=true;});
         addressField.setOnMouseClicked(event -> {isEdit=true;});
         phoneField.setOnMouseClicked(event -> {isEdit=true;});
-
-
-/*                loginField.;
-        passwordField.;
-        roleField.
-                firstNameField.
-                lastNameField.
-                moneyField.
-                addressField.
-                phoneField.*/
     }
 
     private void editProfile() {
@@ -134,12 +126,17 @@ public class UserProfileController extends UserMenuController{
         changeProfileButton.setOnMouseClicked(event -> {editProfile();});
         faqButton.setOnMouseClicked(event -> {switchScene(event,USER_FAQ_FXML);});
         addMoneyButton.setOnMouseClicked(event -> {switchScene(event,USER_ADD_MONEY_FXML);});
+        languageButton.setOnMouseClicked(event -> {
+            int language_count1=client.isRussianLanguage()?LANGUAGE_ENGLISH:LANGUAGE_RUSSIAN;
+            this.switchLanguage(language_count1);
+            client.switchLanguage();
+        });
     }
 
 
     public void initFields(){
         User user=client.getUserProfile();
-        String role=(user.getRole()>0)?"Администратор":"Покупатель";
+        String role=(user.getRole()>0)?admin:userStr;
         loginField.setText(user.getLogin());
         passwordField.setText(user.getPassword());
         roleField.setText(role);
@@ -150,5 +147,23 @@ public class UserProfileController extends UserMenuController{
         phoneField.setText(user.getPhone());
     }
 
+    @Override
+    protected void switchLanguage(int language_count){
+        super.switchLanguage(language_count);
+        headLabel.setText(LABEL_PROFILE_TEXT[language_count]);
+        loginLabel.setText(PROFILE_LOGIN_TEXT[language_count]);
+        passwordLabel.setText(PROFILE_PASSWORD_TEXT[language_count]);
+        firstNameLabel.setText(PROFILE_FIRST_NAME_TEXT[language_count]);
+        lastNameLabel.setText(PROFILE_LAST_NAME_TEXT[language_count]);
+        moneyLabel.setText(PROFILE_MONEY_TEXT[language_count]);
+        roleLabel.setText(PROFILE_ROLE_TEXT[language_count]);
+        addressLabel.setText(PROFILE_ADDRESS_TEXT[language_count]);
+        phoneLabel.setText(PROFILE_PHONE_TEXT[language_count]);
+        changeProfileButton.setText(PROFILE_CHANGE_TEXT[language_count]);
+        faqButton.setText(PROFILE_FAQ_TEXT[language_count]);
+        addMoneyButton.setText(PROFILE_ADD_TEXT[language_count]);
+        admin=PROFILE_ADMIN_TEXT[language_count];
+        userStr=PROFILE_USET_TEXT[language_count];
+    }
 }
 

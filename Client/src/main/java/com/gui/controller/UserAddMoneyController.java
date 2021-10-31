@@ -8,8 +8,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import static com.gui.Constants.*;
+import static com.gui.LanguageSupport.*;
 
 public class UserAddMoneyController extends UserMenuController{
+
+    private String SUCCESSFUL, UNSUCCESSFUL;
 
     @FXML
     private Label messageLabel;
@@ -70,6 +73,26 @@ public class UserAddMoneyController extends UserMenuController{
         backButton.setOnMouseClicked(event -> {switchScene(event,USER_PROFILE_FXML);});
         addMoneyButton.setOnMouseClicked(event -> {addMoney();});
         super.mainPane.setOnMouseClicked(event -> {messageLabel.setText("");});
+
+        languageButton.setOnMouseClicked(event -> {
+            int language_count1=client.isRussianLanguage()?LANGUAGE_ENGLISH:LANGUAGE_RUSSIAN;
+            this.switchLanguage(language_count1);
+            client.switchLanguage();
+        });
+    }
+
+    @Override
+    protected void switchLanguage(int language_count){
+        super.switchLanguage(language_count);
+        headLabel.setText(LABEL_ADD_MONEY_TEXT[language_count]);
+        numberCardLabel.setText(ADD_MONEY_CARD_NUMBER_TEXT[language_count]);
+        TimeLabel.setText(ADD_MONEY_TIME_TEXT[language_count]);
+        cvLabel.setText(ADD_MONEY_CV_TEXT[language_count]);
+        moneyLabel.setText(ADD_MONEY_SUM_TEXT[language_count]);
+        addMoneyButton.setText(ADD_MONEY_TEXT[language_count]);
+        backButton.setText(ADD_MONEY_BACK_TEXT[language_count]);
+        SUCCESSFUL=ADD_MONEY_SUCCESSFUL_TEXT[language_count];
+        UNSUCCESSFUL=ADD_MONEY_UNSUCCESSFUL_TEXT[language_count];
     }
 
     private void addMoney() {
@@ -82,11 +105,11 @@ public class UserAddMoneyController extends UserMenuController{
             client.sendDataToServer(user.getId()+" "+money+" "+add_money);
             if(client.receiveResult()){
                 user.setMoney(money+add_money);
-                messageLabel.setText("Счет пополнен");
+                messageLabel.setText(SUCCESSFUL);
             }
         }
         else
-            messageLabel.setText("Проверьте данные");
+            messageLabel.setText(UNSUCCESSFUL);
 
 
     }

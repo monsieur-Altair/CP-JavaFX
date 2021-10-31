@@ -7,6 +7,10 @@ public class Constants {
     public static final String LIGHT_THEME_PATH="lightTheme.css";
     public static final String DARK_THEME_PATH="darkTheme.css";
 
+    public static final int LANGUAGE_ENGLISH=1;
+    public static final int LANGUAGE_RUSSIAN=0;
+
+
     public static final String REGISTRATION_FXML="Registration.fxml";
     public static final String MAIN_MENU_FXML="MainMenu.fxml";
     public static final String SIGN_IN_FXML="SignIn.fxml";

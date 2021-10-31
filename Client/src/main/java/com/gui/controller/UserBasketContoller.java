@@ -13,13 +13,16 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import static com.gui.Constants.DARK_THEME_PATH;
-import static com.gui.Constants.LIGHT_THEME_PATH;
+import static com.gui.Constants.*;
+import static com.gui.LanguageSupport.*;
 
 public class UserBasketContoller extends UserMenuController{
 
     private ObservableList<Purchase> dataAboutPurchases, selectablePurchasesList;
     private ObservableList<Rebate> dataAboutRebates, selectableRebatesList;
+
+    private String oneCostText,allCostText,yourMoneyText;
+    private String deleted,oneSuccessful,allSuccessful, unsuccessful, fileText;
 
     @FXML
     private Label allCostLabel;
@@ -97,9 +100,9 @@ public class UserBasketContoller extends UserMenuController{
         this.selectAllRebates();
 
 
-        currentAccountLabel.setText("Ваш текущий счет:\t\t\t\t\t"+client.getUserProfile().getMoney());
-        allCostLabel.setText("Всего в корзине товаров на сумму:\t"+calculateSumInBasket());
-        oneCostLabel.setText("Выбран товар на сумму:\t\t\t\t0");
+        currentAccountLabel.setText(yourMoneyText+client.getUserProfile().getMoney());
+        allCostLabel.setText(allCostText+calculateSumInBasket());
+        oneCostLabel.setText(oneCostText+"0");
         messageLabel.setText(" ");
 
     }
@@ -142,6 +145,12 @@ public class UserBasketContoller extends UserMenuController{
         printButton.setOnMouseClicked( event -> {printBasket();});
         useRebateButton.setOnMouseClicked(event -> {activateRebate();});
 
+        languageButton.setOnMouseClicked(event -> {
+            int language_count1=client.isRussianLanguage()?LANGUAGE_ENGLISH:LANGUAGE_RUSSIAN;
+            this.switchLanguage(language_count1);
+            client.switchLanguage();
+        });
+
         purchaseTable.getSelectionModel().selectedItemProperty().addListener(
                 (obs,oldSelection,newSelection)->{
                     if(newSelection!=null){
@@ -149,11 +158,41 @@ public class UserBasketContoller extends UserMenuController{
                         selectablePurchasesList.add(purchaseTable.getSelectionModel().getSelectedItem());
                         String selectableName = selectablePurchasesList.get(0).getProduct_name();
                         searchField.setText(selectableName);
-                        oneCostLabel.setText("Выбран товар на сумму:\t\t\t\t"+ selectablePurchasesList.get(0).getProduct_cost());
+                        oneCostLabel.setText(oneCostText+ selectablePurchasesList.get(0).getProduct_cost());
                         messageLabel.setText(" ");
                     }
                 }
         );
+    }
+
+    @Override
+    protected void switchLanguage(int language_count){
+        super.switchLanguage(language_count);
+        headLabel.setText(LABEL_BASKET_TEXT[language_count]);
+        yourMoneyText=BASKET_CURR_MONEY_TEXT[language_count];
+        currentAccountLabel.setText(yourMoneyText);
+        allCostText=BASKET_ALL_PROD_MONEY_TEXT[language_count];
+        allCostLabel.setText(allCostText);
+        oneCostText=BASKET_SELECT_PROD_MONEY_TEXT[language_count];
+        oneCostLabel.setText(oneCostText);
+        searchField.setPromptText(BASKET_CHOOSE_PROD_TEXT[language_count]);
+        buyOneButton.setText(BASKET_BUY_SELECTED_TEXT[language_count]);
+        deleteButton.setText(BASKET_REMOVE_TEXT[language_count]);
+        idColumn.setText(BASKET_NUMBER_TEXT[language_count]);
+        nameColumn.setText(BASKET_NAME_TEXT[language_count]);
+        typeColumn.setText(BASKET_TYPE_TEXT[language_count]);
+        costColumn.setText(BASKET_COST_TEXT[language_count]);
+        manufacturerColumn.setText(BASKET_MANUF_TEXT[language_count]);
+        rebateManufColumn.setText(BASKET_MANUF_TEXT[language_count]);
+        rebatePercentColumn.setText(BASKET_PERCENT_TEXT[language_count]);
+        printButton.setText(BASKET_PRINT_TEXT[language_count]);
+        buyAllButton.setText(BASKET_BUY_ALL_TEXT[language_count]);
+        useRebateButton.setText(BASKET_USE_REBATE_TEXT[language_count]);
+        unsuccessful=BASKET_UNSUCCESSFUL_TEXT[language_count];
+        oneSuccessful=BASKET_SUCCESSFUL_ONE_TEXT[language_count];
+        allSuccessful=BASKET_SUCCESSFUL_ALL_TEXT[language_count];
+        deleted=BASKET_DELETED_TEXT[language_count];
+        fileText=BASKET_FILE_TEXT[language_count];
     }
 
     private void activateRebate() {
@@ -168,14 +207,14 @@ public class UserBasketContoller extends UserMenuController{
         deleteOneRebate(id_rebate);
 
         purchaseTable.refresh();
-        allCostLabel.setText("Всего в корзине товаров на сумму:\t"+calculateSumInBasket());
+        allCostLabel.setText(allCostText+calculateSumInBasket());
     }
 
     private void printBasket() {
         super.client.sendDataToServer("print basket");
         super.client.sendDataToServer(Integer.toString(super.client.getUserProfile().getId()));
         String filePath = super.client.receiveFilePath();
-        messageLabel.setText("Файл создан: "+filePath);
+        messageLabel.setText(fileText+filePath);
     }
 
     private void buyAllProducts(){
@@ -190,11 +229,11 @@ public class UserBasketContoller extends UserMenuController{
             deleteAllPurchase();
             client.getUserProfile().setMoney(money-product_cost);
             ///////////////////////////////////
-            currentAccountLabel.setText("Ваш текущий счет:\t\t\t\t\t"+client.getUserProfile().getMoney());
-            messageLabel.setText("Товары куплены");
+            currentAccountLabel.setText(yourMoneyText+client.getUserProfile().getMoney());
+            messageLabel.setText(allSuccessful);
         }
         else
-            messageLabel.setText("Недостаточно денег");
+            messageLabel.setText(unsuccessful);
     }
 
     private void deleteAllPurchase() {
@@ -203,7 +242,7 @@ public class UserBasketContoller extends UserMenuController{
 
         if(super.client.receiveResult()){
             selectAllProductsFromBasket();
-            allCostLabel.setText("Всего в корзине товаров на сумму:\t"+calculateSumInBasket());
+            allCostLabel.setText(allCostText+calculateSumInBasket());
         }
     }
 
@@ -221,11 +260,11 @@ public class UserBasketContoller extends UserMenuController{
             deleteOnePurchase();
             client.getUserProfile().setMoney(money-product_cost);
             ///////////////////////////////////
-            currentAccountLabel.setText("Ваш текущий счет:\t\t\t\t\t"+client.getUserProfile().getMoney());
-            messageLabel.setText("Товар куплен");
+            currentAccountLabel.setText(yourMoneyText+client.getUserProfile().getMoney());
+            messageLabel.setText(oneSuccessful);
         }
         else
-            messageLabel.setText("Недостаточно денег");
+            messageLabel.setText(unsuccessful);
     }
 
     private void deleteOnePurchase() {
@@ -236,8 +275,8 @@ public class UserBasketContoller extends UserMenuController{
 
         if(super.client.receiveResult()){
             selectAllProductsFromBasket();
-            allCostLabel.setText("Всего в корзине товаров на сумму:\t"+calculateSumInBasket());
-            messageLabel.setText("Товар удален");
+            allCostLabel.setText(allCostText+calculateSumInBasket());
+            messageLabel.setText(deleted);
         }
     }
 
@@ -256,7 +295,7 @@ public class UserBasketContoller extends UserMenuController{
         checkAllCosts();
         purchaseTable.setItems(dataAboutPurchases);
         searchField.setText("");
-        oneCostLabel.setText("Выбран товар на сумму:\t\t\t\t0");
+        oneCostLabel.setText(oneCostText+"0");
     }
 
     private void checkAllCosts(){

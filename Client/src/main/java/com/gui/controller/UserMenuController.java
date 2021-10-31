@@ -18,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import static com.gui.Constants.*;
+import static com.gui.LanguageSupport.*;
 
 public class UserMenuController {
 
@@ -65,15 +66,23 @@ public class UserMenuController {
     @FXML
     void initialize() {
         initMainScene();
-        headLabel.setText("Добро пожаловать, "+client.getUserProfile().getLogin()+"!");
+
+        languageButton.setOnMouseClicked(event -> {
+            int language_count1=client.isRussianLanguage()?LANGUAGE_ENGLISH:LANGUAGE_RUSSIAN;
+            this.switchLanguage(language_count1);
+            client.switchLanguage();
+        });
     }
 
     public void initMainScene(){
 
         client = OwnClient.getInstance();
 
-        String path=!client.isDarkTheme()?LIGHT_THEME_PATH:DARK_THEME_PATH;
+        String path=client.isDarkTheme()?DARK_THEME_PATH:LIGHT_THEME_PATH;
         switchTheme(path);
+
+        int language_count=client.isRussianLanguage()?LANGUAGE_RUSSIAN:LANGUAGE_ENGLISH;
+        switchLanguage(language_count);
 
         productButton.setOnMouseClicked(event -> {switchScene(event,USER_PRODUCTS_FXML);});
         manufacturerButton.setOnMouseClicked(event->{switchScene(event,USER_MANUFACTURER_FXML); });
@@ -86,7 +95,6 @@ public class UserMenuController {
             stage = (Stage)closeButton.getScene().getWindow();
             stage.close();
         });
-
         themeButton.setOnMouseClicked((event)->{
             String path1=client.isDarkTheme()?LIGHT_THEME_PATH:DARK_THEME_PATH;
             switchTheme(path1);
@@ -94,7 +102,19 @@ public class UserMenuController {
         });
     }
 
-    public void switchTheme(String themePath){
+
+    protected void switchLanguage(int language_count) {
+        profileButton.setText(PROFILE_TEXT[language_count]);
+        basketButton.setText(BASKET_TEXT[language_count]);
+        manufacturerButton.setText(MANUFACTURERS_TEXT[language_count]);
+        productButton.setText(PRODUCTS_TEXT[language_count]);
+        closeButton.setText(EXIT_TEXT[language_count]);
+        themeButton.setText(THEMES_TEXT[language_count]);
+        languageButton.setText(LANGUAGE_TEXT[language_count]);
+        headLabel.setText(WELCOME_TEXT[language_count]+", "+client.getUserProfile().getLogin()+"!");
+    }
+
+    private void switchTheme(String themePath){
         ObservableList<String> styleSheets=headerPane.getStylesheets();
 
         String css = MainMenuGUI.class.getResource(themePath).toExternalForm();

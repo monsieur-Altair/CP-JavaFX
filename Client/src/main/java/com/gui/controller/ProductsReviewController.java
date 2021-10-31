@@ -8,8 +8,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import static com.gui.Constants.DARK_THEME_PATH;
-import static com.gui.Constants.LIGHT_THEME_PATH;
+import static com.gui.Constants.*;
+import static com.gui.Constants.LANGUAGE_RUSSIAN;
+import static com.gui.LanguageSupport.*;
 
 public class ProductsReviewController extends UserMenuController{
 
@@ -39,8 +40,6 @@ public class ProductsReviewController extends UserMenuController{
         isHaveReview=false;
 
         productName=super.client.getSelectableProductForReview().getName();
-        super.headLabel.setText("Отзыв по товару: "+productName);
-
 
         dataFromServer = FXCollections.observableArrayList();
         selectableReviewList = FXCollections.observableArrayList();
@@ -51,6 +50,15 @@ public class ProductsReviewController extends UserMenuController{
 
     }
 
+    @Override
+    protected void switchLanguage(int language_count){
+        super.switchLanguage(language_count);
+        headLabel.setText(LABEL_REVIEW_TEXT[language_count]+": "+productName);
+        reviewButton.setText(REVIEW_BUTTON_TEXT[language_count]);
+        reviewField.setPromptText(REVIEW_INPUT_TEXT[language_count]);
+        userColumn.setText(REVIEW_USER_TEXT[language_count]);
+        reviewColumn.setText(REVIEW_TEXT_TEXT[language_count]);
+    }
 
     public void selectAllReviews(){
 
@@ -82,21 +90,12 @@ public class ProductsReviewController extends UserMenuController{
             }
         });
 
-/*        productsTable.getSelectionModel().selectedItemProperty().addListener(
-                (obs,oldSelection,newSelection)->{
-                    if(newSelection!=null){
-                        selectableProductList.clear();
-                        selectableProductList.add(productsTable.getSelectionModel().getSelectedItem());
-                        String selectableName = selectableProductList.get(0).getName();
-                        String selectableManuf = selectableProductList.get(0).getNameManufacturer();
-                        filterField.setText(selectableManuf);
-                        searchField.setText(selectableName);
-                    }
-                }
-        );
+        languageButton.setOnMouseClicked(event -> {
+            int language_count1=client.isRussianLanguage()?LANGUAGE_ENGLISH:LANGUAGE_RUSSIAN;
+            this.switchLanguage(language_count1);
+            client.switchLanguage();
+        });
 
-        searchButton.setOnMouseClicked(event -> {selectOneProduct();});
-        filterButton.setOnMouseClicked(event -> { selectProductByManufacturer();});*/
     }
 
     private void sendReviewToServer() {

@@ -11,6 +11,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import static com.gui.Constants.*;
+import static com.gui.LanguageSupport.*;
 
 public class UserFAQController extends UserMenuController{
 
@@ -48,7 +49,19 @@ public class UserFAQController extends UserMenuController{
     public void initMainScene(){
         super.initMainScene();
         backButton.setOnMouseClicked(event -> {super.switchScene(event,USER_PROFILE_FXML);});
+        languageButton.setOnMouseClicked(event -> {
+            int language_count1=client.isRussianLanguage()?LANGUAGE_ENGLISH:LANGUAGE_RUSSIAN;
+            this.switchLanguage(language_count1);
+            client.switchLanguage();
+        });
     }
 
-
+    @Override
+    protected void switchLanguage(int language_count){
+        super.switchLanguage(language_count);
+        headLabel.setText(LABEL_FAQ_TEXT[language_count]);
+        questionColumn.setText(FAQ_QUESTION_TEXT[language_count]);
+        answersColumn.setText(FAQ_ANSWER_TEXT[language_count]);
+        backButton.setText(FAQ_BACK_TEXT[language_count]);
+    }
 }

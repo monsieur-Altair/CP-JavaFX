@@ -74,7 +74,7 @@
                   <Font name="Georgia" size="12.0" />
                </font>
             </TextField>
-            <Button fx:id="searchButton" layoutX="349.0" layoutY="73.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Поиск">
+            <Button fx:id="searchButton" layoutX="306.0" layoutY="73.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="84.0" text="Поиск">
                <font>
                   <Font name="Euclid Math One Bold" size="18.0" />
                </font>
@@ -89,7 +89,7 @@
                   <Font name="Georgia" size="12.0" />
                </font>
             </TextField>
-            <Button fx:id="addToBasketButton" layoutX="181.0" layoutY="73.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="154.0" text="В корзину">
+            <Button fx:id="addToBasketButton" layoutX="181.0" layoutY="73.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="114.0" text="В корзину">
                <font>
                   <Font name="Euclid Math One Bold" size="18.0" />
                </font>
@@ -104,6 +104,11 @@
                   <Font name="Euclid Fraktur Bold" size="28.0" />
                </font>
             </Label>
+            <Button fx:id="addToComparisonButton" layoutX="399.0" layoutY="73.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="130.0" text="В сравнение">
+               <font>
+                  <Font name="Euclid Math One Bold" size="18.0" />
+               </font>
+            </Button>
       </children></AnchorPane>
     <Label fx:id="headLabel" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="35.0" prefWidth="822.0" text="Товары" textAlignment="CENTER" textFill="WHITE">
       <font>

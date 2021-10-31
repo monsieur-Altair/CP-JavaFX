@@ -38,7 +38,7 @@
                         <Font name="Euclid Math One Bold" size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="languageButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="130.0" text="Смена языка">
+                  <Button fx:id="languageButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="150.0" text="Смена языка">
                      <font>
                         <Font name="Euclid Math One Bold" size="18.0" />
                      </font>
