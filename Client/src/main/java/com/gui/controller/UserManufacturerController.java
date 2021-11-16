@@ -3,7 +3,6 @@ package com.gui.controller;
 import java.util.Vector;
 
 import com.SQLsupport.DBClass.Manufacturer;
-import com.implementation.client.OwnClient;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,7 +11,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import static com.gui.Constants.*;
 import static com.gui.LanguageSupport.*;
-import static com.gui.LanguageSupport.FAQ_BACK_TEXT;
 
 public class UserManufacturerController extends UserMenuController{
 
@@ -67,8 +65,8 @@ public class UserManufacturerController extends UserMenuController{
     }
 
     public void SelectAllManufacturers(){
-        super.client.sendDataToServer("select all manufacturer");
-        super.client.sendDataToServer(" ");
+        super.client.sendData("select all manufacturer");
+        super.client.sendData(" ");
         Vector<Manufacturer> manufacturers = super.client.receiveManufacturers();
         list.clear();
         list.addAll(manufacturers);
@@ -115,8 +113,8 @@ public class UserManufacturerController extends UserMenuController{
                 return;
             }
 
-            super.client.sendDataToServer("add mark to manufacturer");
-            super.client.sendDataToServer(manufacturerField.getText()+"@@@"+markField.getText());
+            super.client.sendData("add mark to manufacturer");
+            super.client.sendData(manufacturerField.getText()+"@@@"+markField.getText());
             if(super.client.receiveResult()){
                 SelectAllManufacturers();
                 isHaveMark=true;

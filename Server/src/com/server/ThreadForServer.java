@@ -58,9 +58,6 @@ public class ThreadForServer implements Runnable{
     public void run() {
         while(true){
             try{
-                if(!client.isConnected()||client.isClosed()) {
-                    System.out.println("looooooooooooooooooooooool");
-                }
                 String clientChoice=(String)input_stream.readObject();
                 String dataFromClient=(String)input_stream.readObject();
 
@@ -77,6 +74,7 @@ public class ThreadForServer implements Runnable{
                     case "edit user" -> sqlUpdate=new EditUser();
                     case "add money"->sqlUpdate=new EditUserMoney();
                     case "delete one rebate"->sqlUpdate=new DeleteOneRebate();
+                    case "edit role user"->sqlUpdate=new EditRoleUser();
                     case "exit" -> {
                         closeThread();
                         return;
@@ -86,6 +84,7 @@ public class ThreadForServer implements Runnable{
                     sqlUpdate.getData(dataFromClient);
                     boolean res = sqlUpdate.executeUpdate(dbConnection.getMyConnection());
                     output_stream.writeObject(res);
+                    continue;
                 }
 
                 //all selects of products
@@ -99,6 +98,7 @@ public class ThreadForServer implements Runnable{
                     sqlSelectProduct.getData(dataFromClient);
                     Vector<Product> product = sqlSelectProduct.executeSelect(dbConnection.getMyConnection());
                     output_stream.writeObject(product);
+                    continue;
                 }
 
 
@@ -148,6 +148,12 @@ public class ThreadForServer implements Runnable{
                         sqlSelect3.getData(dataFromClient);
                         Vector<Rebate> rebates = sqlSelect3.executeSelect(dbConnection.getMyConnection());
                         output_stream.writeObject(rebates);
+                    }
+                    case "select all users"->{
+                        var sqlSelect3=new SelectAllUsers();
+                        sqlSelect3.getData(dataFromClient);
+                        Vector<User> users = sqlSelect3.executeSelect(dbConnection.getMyConnection());
+                        output_stream.writeObject(users);
                     }
                 }
             }

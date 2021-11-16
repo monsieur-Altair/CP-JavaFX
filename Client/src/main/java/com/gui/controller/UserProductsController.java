@@ -11,7 +11,6 @@ import java.util.Vector;
 
 import static com.gui.Constants.*;
 import static com.gui.LanguageSupport.*;
-import static com.gui.LanguageSupport.MANUFACTURER_CHART_TEXT;
 
 public class UserProductsController extends UserMenuController{
 
@@ -82,8 +81,8 @@ public class UserProductsController extends UserMenuController{
     }
 
     public void selectAllProducts(){
-        super.client.sendDataToServer("select all products");
-        super.client.sendDataToServer(" ");
+        super.client.sendData("select all products");
+        super.client.sendData(" ");
         this.updateTable();
     }
 
@@ -91,8 +90,8 @@ public class UserProductsController extends UserMenuController{
         String selectableName= searchField.getText();
         if(selectableName.equals(""))
             return;
-        super.client.sendDataToServer("select one product");
-        super.client.sendDataToServer(selectableName);
+        super.client.sendData("select one product");
+        super.client.sendData(selectableName);
 
     }
 
@@ -100,8 +99,8 @@ public class UserProductsController extends UserMenuController{
         String selectableManufacturerName= filterField.getText();
         if(selectableManufacturerName.equals(""))
             return;
-        super.client.sendDataToServer("select by manufacturer");
-        super.client.sendDataToServer(selectableManufacturerName);
+        super.client.sendData("select by manufacturer");
+        super.client.sendData(selectableManufacturerName);
         this.updateTable();
     }
 
@@ -151,8 +150,8 @@ public class UserProductsController extends UserMenuController{
             selectOneProduct();
             Vector<Product> products = super.client.receiveProducts();
             if(products!=null){
-                super.client.sendDataToServer("add to basket");
-                super.client.sendDataToServer(super.client.getUserProfile().getId()+" "+
+                super.client.sendData("add to basket");
+                super.client.sendData(super.client.getUserProfile().getId()+" "+
                         products.elementAt(0).getId_product());
 
                 if(super.client.receiveResult()){

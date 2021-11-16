@@ -83,7 +83,7 @@ public class OwnClient {
         return clientsRebates;
     }
 
-    public void sendDataToServer(String data){
+    public void sendData(String data){
         try {
             output_stream.writeObject(data);
         } catch (IOException e) {

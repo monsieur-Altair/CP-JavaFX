@@ -30,30 +30,6 @@ public class DBConnection {
         return connection;
     }
 
-/*    public void close(ResultSet rs)
-    {
-        if(rs !=null)
-        {
-            try
-            {
-                rs.close();
-            }
-            catch(Exception e){}
-        }
-    }
-
-    public void close(java.sql.Statement stmt)
-    {
-        if(stmt !=null)
-        {
-            try
-            {
-                stmt.close();
-            }
-            catch(Exception e){}
-        }
-    }*/
-
     public void destroy()
     {
         if(connection !=null)

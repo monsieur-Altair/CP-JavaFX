@@ -3,7 +3,6 @@ package com.gui.controller;
 import java.util.Vector;
 
 import com.SQLsupport.DBClass.User;
-import com.implementation.client.OwnClient;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -99,7 +98,7 @@ public class UserProfileController extends UserMenuController{
     private void editProfile() {
         if(!isEdit)
             return;
-        client.sendDataToServer("edit user");
+        client.sendData("edit user");
         String newProfile=
                 client.getUserProfile().getId() +"@@@"+
                 loginField.getText()+"@@@"+
@@ -108,10 +107,10 @@ public class UserProfileController extends UserMenuController{
                 lastNameField.getText()+"@@@"+
                 addressField.getText()+"@@@"+
                 phoneField.getText();
-        client.sendDataToServer(newProfile);
+        client.sendData(newProfile);
         if(client.receiveResult()){
-            client.sendDataToServer("signIn");
-            client.sendDataToServer(loginField.getText()+" "+passwordField.getText());
+            client.sendData("signIn");
+            client.sendData(loginField.getText()+" "+passwordField.getText());
             Vector<User>users= client.receiveUsers();
             if(users!=null){
                 client.setUserProfile(users.elementAt(0));

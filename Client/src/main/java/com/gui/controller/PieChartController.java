@@ -1,7 +1,6 @@
 package com.gui.controller;
 
 import com.SQLsupport.DBClass.InformationForPieChart;
-import com.implementation.client.OwnClient;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -25,8 +24,8 @@ public class PieChartController extends UserMenuController{
 
         super.initMainScene();
 
-        client.sendDataToServer("select data for pie chart");
-        client.sendDataToServer(" ");
+        client.sendData("select data for pie chart");
+        client.sendData(" ");
         Vector<InformationForPieChart> informationForPieCharts = client.receiveDataForPieChart();
 
         for(var data:informationForPieCharts)

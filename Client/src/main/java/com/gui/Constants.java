@@ -24,5 +24,8 @@ public class Constants {
     public static final String USER_FAQ_FXML="UserFAQ.fxml";
     public static final String USER_ADD_MONEY_FXML="UserAddMoney.fxml";
 
+    public static final String ADMIN_MENU_FXML="AdminMenu.fxml";
+    public static final String ADMIN_USERS_FXML="AdminUsers.fxml";
+
 
 }

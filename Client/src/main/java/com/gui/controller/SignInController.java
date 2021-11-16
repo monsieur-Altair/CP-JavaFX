@@ -1,15 +1,11 @@
 package com.gui.controller;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import java.util.Vector;
 
 import com.SQLsupport.DBClass.User;
 import com.gui.MainMenuGUI;
 import com.implementation.client.OwnClient;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -21,10 +17,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import static com.gui.Constants.MAIN_MENU_FXML;
-import static com.gui.Constants.USER_MENU_FXML;
+import static com.gui.Constants.*;
 
 public class SignInController {
 
@@ -34,13 +30,7 @@ public class SignInController {
     private OwnClient client;
 
     @FXML
-    private ResourceBundle resources;
-
-    @FXML
     private ImageView arrowButton;
-
-    @FXML
-    private URL location;
 
     @FXML
     private TextField loginTextField;
@@ -49,65 +39,67 @@ public class SignInController {
     private PasswordField passwordFTextiled;
 
     @FXML
+    private Label messageLabel;
+
+    @FXML
     private Button signInButton;
 
     @FXML
     private Label signInLabel;
 
     @FXML
+    protected AnchorPane mainPane;
+
+    @FXML
     void initialize() {
+        arrowButton.setOnMouseClicked(event -> {switchScene(event,MAIN_MENU_FXML);});
+        signInButton.setOnMouseClicked(this::checkUser);
+        messageLabel.setText(" ");
+        mainPane.setOnMouseClicked(event -> {messageLabel.setText(" ");});
 
-        signInButton.setOnAction(new MyActionHandler());
     }
 
 
-
-    public void switchToMainMenuScene(MouseEvent event) throws IOException {
-        root = FXMLLoader.load(MainMenuGUI.class.getResource(MAIN_MENU_FXML));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    public void switchScene(MouseEvent event, String path){
+        try {
+            root = FXMLLoader.load(MainMenuGUI.class.getResource(path));
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void switchToUserMenuScene(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(MainMenuGUI.class.getResource(USER_MENU_FXML));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    class MyActionHandler implements EventHandler<ActionEvent> {
-
-        public MyActionHandler(){};
-
-        @Override
-        public void handle(ActionEvent event) {
-
-            /*String login=loginTextField.getText();
+    public void checkUser(MouseEvent event){
+        /*String login=loginTextField.getText();
             String password=passwordFTextiled.getText();*/
 
-            String login="sekiro";
-            String password="132ds34";
+/*        String login="admin";
+        String password="1242sda23";*/
 
-            client= OwnClient.getInstance();
-            client.sendDataToServer("signIn");
-            String dataFromClient=login+" "+password;
-            client.sendDataToServer(dataFromClient);
+        String login="sekiro";
+        String password="132ds34";
 
-            Vector<User> users = client.receiveUsers();
-            if(users!=null){
-                client.setUserProfile(users.elementAt(0));
-                try {
-                    switchToUserMenuScene(event);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+
+        client= OwnClient.getInstance();
+        client.sendData("signIn");
+        String dataFromClient=login+" "+password;
+        client.sendData(dataFromClient);
+
+        Vector<User> users = client.receiveUsers();
+        if(users!=null){
+            client.setUserProfile(users.elementAt(0));
+            int role=client.getUserProfile().getRole();
+            switch (role){
+                case 1 -> switchScene(event,ADMIN_MENU_FXML);
+                case 0 -> switchScene(event,USER_MENU_FXML);
+                case -1-> messageLabel.setText("Вы забанены");
             }
-            else{
-                System.out.println("cannot receive user");
-            }
+        }
+        else{
+            messageLabel.setText("Не найден");
         }
     }
 

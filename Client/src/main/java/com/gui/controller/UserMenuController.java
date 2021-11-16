@@ -89,8 +89,8 @@ public class UserMenuController {
         basketButton.setOnMouseClicked(event->{switchScene(event,USER_BASKET_FXML); });
         profileButton.setOnMouseClicked(event -> {switchScene(event,USER_PROFILE_FXML);});
         closeButton.setOnMouseClicked(event->{
-            client.sendDataToServer("exit");
-            client.sendDataToServer(" ");
+            client.sendData("exit");
+            client.sendData(" ");
             client.close();
             stage = (Stage)closeButton.getScene().getWindow();
             stage.close();

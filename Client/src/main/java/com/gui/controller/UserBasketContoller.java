@@ -2,7 +2,6 @@ package com.gui.controller;
 
 import com.SQLsupport.DBClass.Purchase;
 import com.SQLsupport.DBClass.Rebate;
-import com.implementation.client.OwnClient;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -108,15 +107,15 @@ public class UserBasketContoller extends UserMenuController{
     }
 
     private void deleteOneRebate(int id_rebate){
-        super.client.sendDataToServer("delete one rebate");
-        super.client.sendDataToServer(Integer.toString(id_rebate));
+        super.client.sendData("delete one rebate");
+        super.client.sendData(Integer.toString(id_rebate));
         if(client.receiveResult())
             selectAllRebates();
     }
 
     private void selectAllRebates() {
-        super.client.sendDataToServer("select all rebates");
-        super.client.sendDataToServer(Integer.toString(super.client.getUserProfile().getId()));
+        super.client.sendData("select all rebates");
+        super.client.sendData(Integer.toString(super.client.getUserProfile().getId()));
         this.updateRebatesTable();
     }
 
@@ -128,8 +127,8 @@ public class UserBasketContoller extends UserMenuController{
 
 
     public void selectAllProductsFromBasket(){
-        super.client.sendDataToServer("select all purchases");
-        super.client.sendDataToServer(Integer.toString(super.client.getUserProfile().getId()));
+        super.client.sendData("select all purchases");
+        super.client.sendData(Integer.toString(super.client.getUserProfile().getId()));
         this.updatePurchasesTable();
     }
 
@@ -211,8 +210,8 @@ public class UserBasketContoller extends UserMenuController{
     }
 
     private void printBasket() {
-        super.client.sendDataToServer("print basket");
-        super.client.sendDataToServer(Integer.toString(super.client.getUserProfile().getId()));
+        super.client.sendData("print basket");
+        super.client.sendData(Integer.toString(super.client.getUserProfile().getId()));
         String filePath = super.client.receiveFilePath();
         messageLabel.setText(fileText+filePath);
     }
@@ -220,8 +219,8 @@ public class UserBasketContoller extends UserMenuController{
     private void buyAllProducts(){
         int money=client.getUserProfile().getMoney();
         int product_cost=calculateSumInBasket();
-        super.client.sendDataToServer("buy all products");
-        super.client.sendDataToServer(super.client.getUserProfile().getId()+" "
+        super.client.sendData("buy all products");
+        super.client.sendData(super.client.getUserProfile().getId()+" "
                 +money+" "
                 +(-1*product_cost));
 
@@ -237,8 +236,8 @@ public class UserBasketContoller extends UserMenuController{
     }
 
     private void deleteAllPurchase() {
-        super.client.sendDataToServer("delete all purchases");
-        super.client.sendDataToServer(Integer.toString(super.client.getUserProfile().getId()));
+        super.client.sendData("delete all purchases");
+        super.client.sendData(Integer.toString(super.client.getUserProfile().getId()));
 
         if(super.client.receiveResult()){
             selectAllProductsFromBasket();
@@ -251,8 +250,8 @@ public class UserBasketContoller extends UserMenuController{
             return;
         int money=client.getUserProfile().getMoney();
         int product_cost=selectablePurchasesList.get(0).getProduct_cost();
-        super.client.sendDataToServer("buy one product");
-        super.client.sendDataToServer(super.client.getUserProfile().getId()+" "
+        super.client.sendData("buy one product");
+        super.client.sendData(super.client.getUserProfile().getId()+" "
                 +money+" "
                 +(-1*product_cost));
 
@@ -270,8 +269,8 @@ public class UserBasketContoller extends UserMenuController{
     private void deleteOnePurchase() {
         if(selectablePurchasesList.size()==0)
             return;
-        super.client.sendDataToServer("delete one purchase");
-        super.client.sendDataToServer(Integer.toString(selectablePurchasesList.get(0).getId_purchase()));
+        super.client.sendData("delete one purchase");
+        super.client.sendData(Integer.toString(selectablePurchasesList.get(0).getId_purchase()));
 
         if(super.client.receiveResult()){
             selectAllProductsFromBasket();

@@ -1,7 +1,6 @@
 package com.gui.controller;
 
 import com.SQLsupport.DBClass.Faq;
-import com.implementation.client.OwnClient;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -38,8 +37,8 @@ public class UserFAQController extends UserMenuController{
         questionColumn.setCellValueFactory(new PropertyValueFactory<>("question"));
         answersColumn.setCellValueFactory(new PropertyValueFactory<>("answer"));
 
-        client.sendDataToServer("select all faq");
-        client.sendDataToServer(" ");
+        client.sendData("select all faq");
+        client.sendData(" ");
         dataFromServer.addAll(super.client.receiveFAQ());
         faqTable.setItems(dataFromServer);
 

@@ -1,7 +1,6 @@
 package com.gui.controller;
 
 import com.SQLsupport.DBClass.User;
-import com.implementation.client.OwnClient;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -101,8 +100,8 @@ public class UserAddMoneyController extends UserMenuController{
         int money=user.getMoney(), add_money=Integer.parseInt(moneyField.getText());
 
         if(checkAllFields()){
-            client.sendDataToServer("add money");
-            client.sendDataToServer(user.getId()+" "+money+" "+add_money);
+            client.sendData("add money");
+            client.sendData(user.getId()+" "+money+" "+add_money);
             if(client.receiveResult()){
                 user.setMoney(money+add_money);
                 messageLabel.setText(SUCCESSFUL);

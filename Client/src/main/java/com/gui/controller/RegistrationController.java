@@ -1,17 +1,12 @@
 package com.gui.controller;
 
 import java.io.IOException;
-import java.net.URL;
-import java.sql.*;
-import java.util.ResourceBundle;
 
 
 import com.SQLsupport.DBClass.User;
-import com.gui.Constants;
 import com.gui.MainMenuGUI;
 import com.implementation.client.OwnClient;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,7 +18,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -105,10 +99,10 @@ public class RegistrationController {
 
 
             client=OwnClient.getInstance();
-            client.sendDataToServer("registration");
+            client.sendData("registration");
             String dataFromClient=login+" "+password+" "+role+" "+firstName+" "+
                     lastName+" "+money+" "+address+" "+phone;
-            client.sendDataToServer(dataFromClient);
+            client.sendData(dataFromClient);
 
             boolean result = client.receiveResult();
             if(result){

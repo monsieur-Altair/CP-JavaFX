@@ -1,7 +1,6 @@
 package com.gui.controller;
 
 import com.SQLsupport.DBClass.Review;
-import com.implementation.client.OwnClient;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -62,8 +61,8 @@ public class ProductsReviewController extends UserMenuController{
 
     public void selectAllReviews(){
 
-        super.client.sendDataToServer("select all reviews");
-        super.client.sendDataToServer(productName);
+        super.client.sendData("select all reviews");
+        super.client.sendData(productName);
         this.updateTable();
     }
 
@@ -102,8 +101,8 @@ public class ProductsReviewController extends UserMenuController{
         String text_review=reviewField.getText();
         if(text_review.equals(""))
             return;
-        client.sendDataToServer("add review");
-        client.sendDataToServer(client.getUserProfile().getId()+"@@@"
+        client.sendData("add review");
+        client.sendData(client.getUserProfile().getId()+"@@@"
                 +client.getSelectableProductForReview().getId_product()+"@@@"
                 +text_review);
     }
