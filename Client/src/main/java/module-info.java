@@ -7,6 +7,10 @@ module Client {
 
     opens com.gui to javafx.fxml;
     exports com.gui;
-    exports com.gui.controller;
-    opens com.gui.controller to javafx.fxml;
+    exports com.gui.controller.user;
+    opens com.gui.controller.user to javafx.fxml;
+    exports com.gui.controller.admin;
+    opens com.gui.controller.admin to javafx.fxml;
+    exports com.gui.controller.general;
+    opens com.gui.controller.general to javafx.fxml;
 }

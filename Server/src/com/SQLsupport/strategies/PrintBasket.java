@@ -1,11 +1,10 @@
 package com.SQLsupport.strategies;
 
 import com.SQLsupport.DBClass.Purchase;
-import com.SQLsupport.Requestable;
+import com.SQLsupport.strategies.selectable.SelectAllPurchases;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.util.Vector;
 

@@ -26,6 +26,10 @@ public class Constants {
 
     public static final String ADMIN_MENU_FXML="AdminMenu.fxml";
     public static final String ADMIN_USERS_FXML="AdminUsers.fxml";
+    public static final String ADMIN_PROFILE_FXML="AdminProfile.fxml";
+    public static final String ADMIN_PRODUCTS_FXML="AdminProducts.fxml";
+    public static final String ADMIN_MANUFACTURER_FXML="AdminManufacturer.fxml";
+
 
 
 }

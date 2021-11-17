@@ -1,10 +1,15 @@
 package com.server;
 
 import com.SQLsupport.DBClass.*;
-import com.SQLsupport.SelectableProduct;
+import com.SQLsupport.strategies.SelectableProduct;
 import com.SQLsupport.strategies.*;
 import com.SQLsupport.DBConnection;
-import com.SQLsupport.Updatable;
+import com.SQLsupport.strategies.Updatable;
+import com.SQLsupport.strategies.selectable.*;
+import com.SQLsupport.strategies.selectableproducts.SelectAllProducts;
+import com.SQLsupport.strategies.selectableproducts.SelectOneProduct;
+import com.SQLsupport.strategies.selectableproducts.SelectProductsByManufacturer;
+import com.SQLsupport.strategies.updatable.*;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -75,6 +80,11 @@ public class ThreadForServer implements Runnable{
                     case "add money"->sqlUpdate=new EditUserMoney();
                     case "delete one rebate"->sqlUpdate=new DeleteOneRebate();
                     case "edit role user"->sqlUpdate=new EditRoleUser();
+                    case "create product"->sqlUpdate=new CreateProduct();
+                    case "delete one product"->sqlUpdate=new DeleteOneProduct();
+                    case "edit product count"->sqlUpdate=new EditProductCount();
+                    case "create manufacturer"->sqlUpdate=new AddManufacturer();
+                    case "delete one manufacturer"->sqlUpdate=new DeleteOneManufacturer();
                     case "exit" -> {
                         closeThread();
                         return;

@@ -4,4 +4,7 @@ module Server {
     exports com.SQLsupport;
     exports com.SQLsupport.strategies;
     exports com.SQLsupport.DBClass;
+    exports com.SQLsupport.strategies.updatable;
+    exports com.SQLsupport.strategies.selectableproducts;
+    exports com.SQLsupport.strategies.selectable;
 }
