@@ -76,11 +76,11 @@ public class SignInController {
         /*String login=loginTextField.getText();
             String password=passwordFTextiled.getText();*/
 
-        String login="admin";
-        String password="1242sda23";
+     /*   String login="admin";
+        String password="1242sda23"*/;
 
-        /*String login="sekiro";
-        String password="132ds34";*/
+        String login="sekiro";
+        String password="132ds34";
 
 
         client= OwnClient.getInstance();

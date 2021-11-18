@@ -1,6 +1,6 @@
-demo/
-.idea/libraries/
+#demo/
+#.idea/libraries/
 #*.png
-*.jar
-*.log
+#*.jar
+#*.log
 file-*.txt

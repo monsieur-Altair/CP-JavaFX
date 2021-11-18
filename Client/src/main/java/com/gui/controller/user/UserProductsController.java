@@ -86,13 +86,12 @@ public class UserProductsController extends UserMenuController{
         this.updateTable();
     }
 
-    public void selectOneProduct(){
+    private void selectOneProduct(){
         String selectableName= searchField.getText();
         if(selectableName.equals(""))
             return;
         super.client.sendData("select one product");
         super.client.sendData(selectableName);
-
     }
 
     public void selectProductByManufacturer(){
