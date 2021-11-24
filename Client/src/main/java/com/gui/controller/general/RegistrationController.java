@@ -1,6 +1,7 @@
 package com.gui.controller.general;
 
 import java.io.IOException;
+import java.util.Vector;
 
 
 import com.SQLsupport.DBClass.User;
@@ -107,7 +108,13 @@ public class RegistrationController {
             boolean result = client.receiveResult();
             if(result){
                 try {
-                    client.setUserProfile(new User(login,password,role,firstName,lastName,money,address,phone));
+                    //client.setUserProfile(new User(login,password,role,firstName,lastName,money,address,phone));
+                    client.sendData("signIn");
+                    dataFromClient=login+" "+password;
+                    client.sendData(dataFromClient);
+                    Vector<User> users = client.receiveUsers();
+                    if(users!=null)
+                        client.setUserProfile(users.elementAt(0));
                     switchToUserMenuScene(event);
                 } catch (IOException e) {
                     e.printStackTrace();

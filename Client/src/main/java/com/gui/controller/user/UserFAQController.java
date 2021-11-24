@@ -26,6 +26,9 @@ public class UserFAQController extends UserMenuController{
     private TableColumn<Faq, String> questionColumn;
 
     @FXML
+    private TableColumn<Faq, String> loginColumn;
+
+    @FXML
     private Button backButton;
 
     @FXML
@@ -34,6 +37,7 @@ public class UserFAQController extends UserMenuController{
         this.initMainScene();
         dataFromServer= FXCollections.observableArrayList();
 
+        loginColumn.setCellValueFactory(new PropertyValueFactory<>("user_login"));
         questionColumn.setCellValueFactory(new PropertyValueFactory<>("question"));
         answersColumn.setCellValueFactory(new PropertyValueFactory<>("answer"));
 
@@ -59,6 +63,7 @@ public class UserFAQController extends UserMenuController{
     protected void switchLanguage(int language_count){
         super.switchLanguage(language_count);
         headLabel.setText(LABEL_FAQ_TEXT[language_count]);
+        loginColumn.setText(FAQ_USER_LOGIN[language_count]);
         questionColumn.setText(FAQ_QUESTION_TEXT[language_count]);
         answersColumn.setText(FAQ_ANSWER_TEXT[language_count]);
         backButton.setText(FAQ_BACK_TEXT[language_count]);

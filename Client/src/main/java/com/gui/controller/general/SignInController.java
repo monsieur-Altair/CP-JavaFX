@@ -73,16 +73,19 @@ public class SignInController {
     }
 
     public void checkUser(MouseEvent event){
-        /*String login=loginTextField.getText();
-            String password=passwordFTextiled.getText();*/
+        String login=loginTextField.getText();
+        String password=passwordFTextiled.getText();
 
-        String login="admin";
-        String password="1242sda23";
+        if(login.equals("")||password.equals("")){
+            messageLabel.setText("Введите логин и пароль");
+            return;
+        }
 
-/*
-        String login="sekiro";
-        String password="132ds34";
-*/
+       /* String login="admin";
+        String password="1242sda23";*/
+
+/*        String login="sekiro";
+        String password="132ds34";*/
 
 
         client= OwnClient.getInstance();

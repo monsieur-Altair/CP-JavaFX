@@ -60,8 +60,9 @@
             </VBox>
             <TableView fx:id="faqTable" layoutX="186.0" layoutY="30.0" prefHeight="383.0" prefWidth="640.0">
               <columns>
-                <TableColumn fx:id="questionColumn" prefWidth="268.0" text="Вопрос" />
-                <TableColumn fx:id="answersColumn" minWidth="0.0" prefWidth="371.1999816894531" text="Ответ" />
+                  <TableColumn fx:id="loginColumn" prefWidth="103.99992370605469" text="Логин" />
+                <TableColumn fx:id="questionColumn" prefWidth="245.60003662109375" text="Вопрос" />
+                <TableColumn fx:id="answersColumn" minWidth="0.0" prefWidth="289.60003662109375" text="Ответ" />
               </columns>
             </TableView>
             <Button fx:id="backButton" layoutX="695.0" layoutY="435.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="130.0" text="Назад">

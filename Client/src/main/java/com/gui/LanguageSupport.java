@@ -53,6 +53,7 @@ public class LanguageSupport {
     public static final String[] BASKET_FILE_TEXT={"Файл создан: ","File if created: "};
 
     public static final String[] LABEL_FAQ_TEXT={"Часто задаваемые вопросы","Frequently asked questions"};
+    public static final String[] FAQ_USER_LOGIN={"Логин","Login"};
     public static final String[] FAQ_QUESTION_TEXT={"Вопрос","Question"};
     public static final String[] FAQ_ANSWER_TEXT={"Ответ","Answer"};
     public static final String[] FAQ_BACK_TEXT={"Назад","Back"};
